@@ -1,0 +1,275 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.enrouge {
+    color: red;
+}
+
+.gantt {
+    position: relative;
+    margin-top: 50px;
+    width: auto;
+}
+
+/**********************************************
+ * Menu / Header 
+ *********************************************/
+
+.header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: white;
+    z-index: 100000;
+}
+
+fieldset {
+    display: inline;
+    margin-left: 20px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+fieldset label {
+    margin-right: 15px;
+    margin-left: 5px;
+}
+
+fieldset button {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.menu {
+    display: inline-block;
+}
+
+/**********************************************
+ * Planning  
+ *********************************************/
+
+.planning {
+    /* height: 200px; */
+    background-color: #f8f8f8;
+    position: absolute;
+    top: 0px;
+    /* overflow: hidden; */
+}
+
+
+
+.formation {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    background-color: rgb(79, 199, 255);
+    overflow: hidden;
+    border-radius: 5px;
+    border-bottom: 2px solid #e1e1e1;
+    border-top: 2px solid #e1e1e1;
+    /* vertical-align: middle; */
+}
+
+.entreprise {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    background-color: rgba(0, 177, 59, 0.674);
+    overflow: hidden;
+}
+
+.certification {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    background-color: rgb(212, 69, 69);
+    overflow: hidden;
+}
+
+.formation:hover {
+    border-color: #008b1a;
+}
+
+
+/**********************************************
+ * Fond 
+ *********************************************/
+
+
+.fond1 {
+    position: fixed;
+    top: 55px;
+    left: 0px;
+    overflow: hidden;
+    background-color: white;
+
+}
+
+.fond2 {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+}
+
+.jours {
+    white-space: nowrap;
+}
+
+.jour {
+    border-right: 1px solid rgb(233, 233, 233);
+    display: inline-block;
+    height: 300px;
+    
+}
+
+.jour_we {
+    background-color: rgb(236, 236, 236);    
+}
+
+.ferie {
+  background-color: rgb(255, 203, 203);    
+}
+
+.aujourdhui {
+    background-color: rgb(125, 253, 90);   
+    z-index: 100000; 
+
+}
+
+
+
+.jour:hover {
+    background-color: rgba(98, 98, 98, 0.281);
+}
+
+.weeks {
+    white-space: nowrap;
+}
+.week {
+    border-right: 2px solid rgb(183, 183, 183);
+    display: inline-block;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+
+.month {
+    border-right: 2px solid rgb(183, 183, 183);
+    display: inline-block;
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    overflow: hidden;
+}
+
+.months {
+    white-space: nowrap;
+    background-color: #f8f8f8;
+    font-weight: bolder;
+}
+
+.jour_fin_de_mois {
+    border-right-color: rgb(25, 25, 25);
+}
+
+
+/* Dialog */
+
+.dialog {
+    position: absolute;
+    background-color: #e1e1e1b5;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 1000000;
+}
+
+.dialog>div {
+    background-color: #f8f8f8;
+    position: absolute; 
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-top: auto; 
+    margin-bottom: auto;
+    width: 40%; 
+    height: auto;
+    border: 4px solid #b3b2b2;
+    border-radius: 5px;
+  }
+
+  .dialog>div>div {
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .dialog>div>div:hover {
+    background-color: rgb(91, 91, 91);
+    color: #eeeeee;
+  }
+
+
+  /* Spinner */
+
+
+  .spinner-container {
+    position: absolute;
+    background-color: #e1e1e1b5;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 10000001;
+}
+
+  
+  
+/* --------------------------------------------------------------------------------- */
+ 
+  .loader {
+    top: 50%;
+    left: 50%;
+    margin: -75px 0 0 -75px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    border: 2px solid #0096cd;
+    box-sizing: border-box;
+    animation: rotation 2s linear infinite;
+  }
+  .loader::after {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    border: 4px solid #fa4242;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+      
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }  

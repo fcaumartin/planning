@@ -1,3 +1,5 @@
+const { contextBridge, ipcRenderer } = require('electron')
+
 function domReady(condition) {
   return new Promise(resolve => {
     if (condition.includes(document.readyState)) {
@@ -91,6 +93,14 @@ window.onmessage = (ev) => {
 
 setTimeout(removeLoading, 4999)
 
+contextBridge.exposeInMainWorld('electronAPI', {
+  openFile: () => ipcRenderer.invoke('dialog:openFile'),
+  getFiles: () => ipcRenderer.invoke('dialog:getFiles'),
+  choice: (param) => {
+    console.log(`!!!!!! ${param}`)
+    ipcRenderer.send('choice', param);
+  }
 
+})
 
 

@@ -2,6 +2,9 @@ import { app, BrowserWindow, shell, ipcMain } from 'electron'
 import { release } from 'node:os'
 import { join } from 'node:path'
 import { update } from './update'
+var Excel = require('exceljs');
+const path = require('path');
+const fs = require('fs');
 
 // The built directory structure
 //
@@ -53,9 +56,10 @@ async function createWindow() {
       // Consider using contextBridge.exposeInMainWorld
       // Read more on https://www.electronjs.org/docs/latest/tutorial/context-isolation
       nodeIntegration: false,
-      contextIsolation: true,
+      //contextIsolation: true,
     },
   })
+  mainWindow = win
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
     win.loadURL(url)
@@ -122,3 +126,117 @@ ipcMain.handle('open-win', (_, arg) => {
   }
 })
 
+/*******************************************
+ * Read Excel...
+ *******************************************/
+
+let mainWindow = null;
+
+let file_to_open = "";
+
+ipcMain.handle('dialog:openFile', readExcel)
+ipcMain.handle('dialog:getFiles', getFiles)
+
+ipcMain.on('choice', (event, donnees) => {
+  console.log("+++++++++++++++++++++") 
+  console.log(donnees) // affiche "données à envoyer"
+  file_to_open = donnees;
+  mainWindow.setTitle(file_to_open)
+  console.log("+++++++++++++++++++++") 
+
+})
+
+function getFiles(p1, p2, p3) {
+
+	console.log("getFiles")
+	
+	let files1 = fromDir(app.getPath("documents"), ".xlsx");
+	let files2 = fromDir(app.getPath("downloads"), ".xlsx");
+	let files = [...files1, ...files2];
+	// var unixtime_ms = new Date().getTime();
+    // while(new Date().getTime() < unixtime_ms + 5000) {}
+	return files.map((f) => {
+		let stat = fs.lstatSync(f);
+		return {
+			fullName: f,
+			ts: stat.mtime,
+			name: path.basename(f),
+			directory: path.parse(f).dir
+		}
+	})
+}
+
+function fromDir(startPath, filter) {
+	
+	console.log(startPath)
+	let excels = [];
+	
+    if (!fs.existsSync(startPath)) {
+		// console.log("no dir ", startPath);
+        return;
+    }
+	
+    var files = fs.readdirSync(startPath);
+    for (var i = 0; i < files.length; i++) {
+		// console.log(files[i])
+		var filename = path.join(startPath, files[i]);
+        var stat = fs.lstatSync(filename);
+        if (stat.isDirectory() && !files[i].startsWith(".") && filename.toLowerCase().search("node_modules")==-1 && filename.toLowerCase().search("vendor")==-1 && filename.toLowerCase().search("var/cache")==-1) {
+			let tmp = fromDir(filename, filter); //recurse
+			excels.push(...tmp);
+        } else if (filename.endsWith(filter) && filename.toLowerCase().search("programmation")!=-1 && filename.toLowerCase().search('amiens')!=-1) {
+			// console.log('-- found: ', filename);
+			excels.push(filename);
+        };
+    };
+
+	return excels;
+};
+
+async function readExcel() {
+
+	// console.log(file)
+	// console.log(p1)
+	// console.log(p2)
+	// console.log(p3)
+	// const { canceled, filePaths } = await dialog.showOpenDialog()
+	// if (canceled) {
+	// 	console.log("cancel")
+	// 	file = filePaths[0];
+	// } else {
+	// 	console.log("ok")
+	// 	file = null;
+	// }
+	// let re = [];
+		
+		var wb = new Excel.Workbook();
+		// var path = require('path');
+		// var filePath = '/home/frc/Documents/AMIENS-Programmation.xlsx';
+    console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+    console.log(`file_to_open=${file_to_open}`)
+    console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+	
+		const re = await wb.xlsx.readFile(file_to_open).then(function () {
+	
+		var sh = wb.getWorksheet("Programmation");
+
+		let result = [];
+		for (let i = 1; i <= sh.rowCount; i++) {
+			if (sh.getRow(i).getCell(1).value && sh.getRow(i).getCell(1).value !=="GRN") {
+
+				result.push(
+					sh.getRow(i).values
+
+				);
+			}
+		}
+	
+			return result;
+		});
+
+		// re = fromDir('/home/frc', '.xlsx')
+	
+		return re;
+	// }
+
+}
