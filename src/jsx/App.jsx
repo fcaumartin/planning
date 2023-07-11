@@ -53,23 +53,26 @@ function App() {
 	
 
 	const callOuvrir = async (file) => {
-		// window.webContents.send('nom-du-message', 'données à envoyer')
+
 		setLoading(true)
-		console.log(file)
-		let res666 = window.electronAPI.choice(file);
+
+		window.electronAPI.choice(file);
 		const raw = await window.electronAPI.openFile()
 		
-		// console.log("-RAW----------------------------")
-		// console.log(raw)
-		// console.log("-----------------------------")
 		let data = tools.rawToData(raw)
-		// console.log("-DATA----------------------------")
-		// console.log(data)
-		// console.log("-----------------------------")
+
+		// const m = tools.getFormateur(data)
+		// const k = m.keys()
 		
-		
-		// setData(data)
-		
+		// for (const value of k) {
+		// 	console.log(value);
+		// 	const tab = m.get(value)
+		// 	for (const t of tab) {
+		// 		console.log(`\t${t.sigle} -> ${t.stagiaires_reel}`)
+				
+		// 	}
+		//   }
+
 		// dispatch(loadExcel(raw));
 		dispatch(loadExcel(data));
 		setLoading(false)

@@ -10,6 +10,8 @@ const ganttSlice = createSlice({
         filtered: [],
         grns: [],
         selectedGrns: [],
+        formateurs: [],
+        selectedFormateurs: [],
         sigles: [],
         selectedSigles: [],
         tsDebut: 0,
@@ -23,8 +25,10 @@ const ganttSlice = createSlice({
             state.selectedGrns = [...state.grns]
 			state.sigles = tools.getSigles(state.data)
 			state.selectedSigles = [...state.sigles]
+            state.formateurs = tools.getFormateurs(state.data)
+			state.selectedFormateurs = [...state.formateurs]
 
-			state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle)) 
+			state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
 
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
@@ -48,7 +52,7 @@ const ganttSlice = createSlice({
             state.sigles = tools.getSigles(state.data, state.selectedGrns)
             state.selectedSigles = [...state.sigles]
 
-            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle)) 
+            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
 
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
@@ -70,7 +74,7 @@ const ganttSlice = createSlice({
         changeSelectedSigles: (state, action) => {
             state.selectedSigles = action.payload
 
-            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle)) 
+            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
 
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
@@ -82,11 +86,23 @@ const ganttSlice = createSlice({
 			let mom_max = moment.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
 
+            return state;
+        },
+        changeSelectedFormateurs: (state, action) => {
+            state.selectedFormateurs = action.payload
 
-            // console.log("--loading-Excel----------------------")
-            // console.log(state)
-            // console.log("-------------------------------------")
-            
+            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
+
+            let min=4000000000, max=0;
+			for (const o of state.filtered) {
+				if (o.tsDebut<min) min=o.tsDebut;
+				if (o.tsFin>max) max=o.tsFin;
+			}
+			let mom_min = moment.unix(min);
+			state.tsDebut = mom_min.startOf("month").unix()+36000;
+			let mom_max = moment.unix(max + 86400).endOf("month");
+			state.tsFin = mom_max.unix()+36000;
+
             return state;
         }
     }
@@ -109,7 +125,7 @@ const configSlice = createSlice({
     }
 })
 
-export const { loadExcel, changeSelectedGrns, changeSelectedSigles } = ganttSlice.actions; 
+export const { loadExcel, changeSelectedGrns, changeSelectedSigles, changeSelectedFormateurs } = ganttSlice.actions; 
 export const { setLargeurJour } = configSlice.actions; 
 
 export const store = configureStore({

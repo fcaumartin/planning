@@ -2,7 +2,7 @@ import Fond1 from "./Fond1";
 
 // import config from "../config";
 import { useDispatch, useSelector } from "react-redux";
-import { changeSelectedGrns, changeSelectedSigles, setLargeurJour } from '../redux'
+import { changeSelectedGrns, changeSelectedSigles, changeSelectedFormateurs, setLargeurJour } from '../redux'
 import MenuSelect from "./MenuSelect";
 
 function Header(props) {
@@ -27,6 +27,10 @@ function Header(props) {
 		dispatch(changeSelectedSigles(list))
 	}
 
+	const handleChangeFormateurs = (list) => {
+		dispatch(changeSelectedFormateurs(list))
+	}
+
 	return (
 		<div className="header">
 			<fieldset>
@@ -44,6 +48,7 @@ function Header(props) {
 				<legend>Filtres</legend>
 				<MenuSelect name="GRN" data={gantt.grns} onChange={handleChangeGRN} />
 				<MenuSelect name="Formations" data={gantt.sigles} onChange={handleChangeSigles}/>
+				<MenuSelect name="Formateurs" data={gantt.formateurs} onChange={handleChangeFormateurs}/>
 			</fieldset>
 			<Fond1 scrollX={props.scrollX}/>
 

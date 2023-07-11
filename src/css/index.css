@@ -98,7 +98,7 @@ fieldset button {
     margin: 0px;
     padding: 0px;
     display: block;
-    background-color: rgb(151, 151, 151);
+    background-color: rgba(27, 27, 27, 0.4);
     overflow: hidden;
 }
 

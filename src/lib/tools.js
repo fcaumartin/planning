@@ -145,8 +145,8 @@ const tools = {
 			let osia2 = o[21] || ""
 			let osiacertif = o[22] || ""
 			let duree = o[23] || ""
-			let stagiaires_reel = o[40] ? o[40].result : 0
-			let stagiaires_prevu = o[41] ? o[41].result : 0
+			let stagiaires_reel = o[40] ? o[40].result : "Non renseigné"
+			let stagiaires_prevu = o[41] ? o[41].result : "Nom"
 			let interruption1d1 = o[42] && moment(o[42])
 			let interruption1d2 = o[43] && moment(o[43])
 			let interruption2d1 = o[44] && moment(o[44])
@@ -212,6 +212,19 @@ const tools = {
 		}
 
 		return tmp
+	},
+
+	getFormateurs: (data) => {
+		let result = [];
+
+		data.forEach( (e, i) => {
+
+			if (!result.includes(e.formateur)) {
+				result.push(e.formateur)
+			}
+		})
+
+		return result
 	},
 
 	getGRN: (data) => {
