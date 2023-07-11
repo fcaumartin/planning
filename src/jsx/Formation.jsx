@@ -25,10 +25,12 @@ function Formation({index, elt}) {
 			<b>{elt.sigle}</b>
 			
 			<span> - {elt.osia1 || elt.osia2 || ""} </span> 
-			-
+			&nbsp;-&nbsp;
 			{elt.formateur || <span className="enrouge">Pas de formateur</span>}
-			- 
+			&nbsp;-&nbsp;
 			{elt.af || <span className="enrouge">Pas d'assistante</span>}
+			&nbsp;-&nbsp;
+			<b>{elt.stagiaires_reel && ("[" + elt.stagiaires_reel + "]")}</b>
 
 			{
 				elt.pe1Debut && <div
@@ -50,6 +52,32 @@ function Formation({index, elt}) {
 										top: 0, 
 										left: tools.diffTsToDays(elt.pe2Debut, elt.tsDebut)*config.largeurJour, 
 										width: (tools.diffTsToDays(elt.pe2Debut, elt.pe2Fin)+1)*config.largeurJour, 
+										height: config.hauteurFormation 
+									}}
+								>
+									</div>
+			}
+
+			{
+				elt.interruption1Debut && <div
+									className="conges" 
+									style={{
+										top: 0, 
+										left: tools.diffTsToDays(elt.interruption1Debut, elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.interruption1Debut, elt.interruption1Fin)+1)*config.largeurJour, 
+										height: config.hauteurFormation 
+									}}
+								>
+									</div>
+			}
+
+{
+				elt.interruption2Debut && <div
+									className="conges" 
+									style={{
+										top: 0, 
+										left: tools.diffTsToDays(elt.interruption2Debut, elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.interruption2Debut, elt.interruption2Fin)+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>

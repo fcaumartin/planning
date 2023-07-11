@@ -93,6 +93,15 @@ fieldset button {
     overflow: hidden;
 }
 
+.conges {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    background-color: rgb(151, 151, 151);
+    overflow: hidden;
+}
+
 .formation:hover {
     border-color: #008b1a;
 }

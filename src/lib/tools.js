@@ -144,6 +144,13 @@ const tools = {
 			let osia1 = o[20] || ""
 			let osia2 = o[21] || ""
 			let osiacertif = o[22] || ""
+			let duree = o[23] || ""
+			let stagiaires_reel = o[40] ? o[40].result : 0
+			let stagiaires_prevu = o[41] ? o[41].result : 0
+			let interruption1d1 = o[42] && moment(o[42])
+			let interruption1d2 = o[43] && moment(o[43])
+			let interruption2d1 = o[44] && moment(o[44])
+			let interruption2d2 = o[45] && moment(o[45])
 			
 			let tsDebut = d1.unix() + 36000
 			let tsFin = d2.unix() + 36000
@@ -151,25 +158,57 @@ const tools = {
 			let pe1Fin = pe1d2 ? pe1d2.unix() + 36000: undefined
 			let pe2Debut = pe2d1 ? pe2d1.unix() + 36000: undefined
 			let pe2Fin = pe2d2 ? pe2d2.unix() + 36000: undefined
+			let interruption1Debut = interruption1d1 ? interruption1d1.unix() + 36000: undefined
+			let interruption1Fin = interruption1d2 ? interruption1d2.unix() + 36000: undefined
+			let interruption2Debut = interruption2d1 ? interruption2d1.unix() + 36000: undefined
+			let interruption2Fin = interruption2d2 ? interruption2d2.unix() + 36000: undefined
 			let certifDebut = certifd1 ? certifd1.unix() + 36000: undefined
 			let certifFin = certifd2 ? certifd2.unix() + 36000: undefined
 			let dateDebut = d1.format("DD/MM/YYYY")
 			let dateFin = d2.format("DD/MM/YYYY")
 			let titre = sigle + " - " + ((osia1 || osia2) || "") + " - " + formateur + " - " + af
+			if (stagiaires_reel>0) titre += " [" + stagiaires_reel + "]"
+
 			let description = `${sigle} : ${libelle}\n`
 			if (dateDebut) description += `${dateDebut} au ${dateFin}\n` 
 			if (grn) description += `GRN: ${grn}\n`
 			if (formateur) description += `Formateur: ${formateur}\n`
 			if (af) description += `Assistante: ${af}\n`
 			if (bdc) description += `Bon de commande: ${bdc}\n`
-			if (osia1) description += `OSIA CRDF: ${osia1}\n`
+			if (osia1) description += `OSIA CRHDF: ${osia1}\n`
 			if (osia2) description += `OSIA (autre): ${osia2}\n`
 			if (osiacertif) description += `OSIA Certif: ${osiacertif}\n`
+			if (duree) description += `Durée (hors PE): ${osiacertif}\n`
+			if (stagiaires_prevu && stagiaires_reel) description += `Stagiaires (réels/prévus) : ${stagiaires_reel}/${stagiaires_reel}\n`
+			if (interruption1d1 && interruption1d2) description += `Interruption du ${interruption1d1.format("DD/MM/YYYY")} au ${interruption1d2.format("DD/MM/YYYY")}\n`
+			if (interruption2d1 && interruption2d2) description += `Interruption du ${interruption2d1.format("DD/MM/YYYY")} au ${interruption2d2.format("DD/MM/YYYY")}\n`
 
 
 			// console.log("--------------------------------------------")
 			// console.log(sigle + ":" + grn + " " + o[9] + " " + o[10])
-			tmp.push({titre, grn, sigle, libelle, convention, bdc, rht, formateur, optex, af, tsDebut, tsFin, dateDebut, dateFin, description, pe1Debut, pe1Fin, pe2Debut, pe2Fin, certifDebut, certifFin, osia1, osia2, osiacertif })
+			tmp.push({
+				titre, 
+				grn, 
+				sigle, 
+				libelle, 
+				convention, 
+				bdc, 
+				rht, 
+				formateur, 
+				optex, 
+				af, 
+				tsDebut, tsFin, 
+				dateDebut, dateFin, 
+				description, 
+				pe1Debut, pe1Fin, pe2Debut, pe2Fin, 
+				certifDebut, certifFin, 
+				osia1, osia2, 
+				osiacertif,
+				duree,
+				stagiaires_reel, stagiaires_prevu,
+				interruption1Debut, interruption1Fin, interruption2Debut, interruption2Fin
+
+			})
 		}
 
 		return tmp

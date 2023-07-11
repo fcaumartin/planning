@@ -138,17 +138,17 @@ ipcMain.handle('dialog:openFile', readExcel)
 ipcMain.handle('dialog:getFiles', getFiles)
 
 ipcMain.on('choice', (event, donnees) => {
-  console.log("+++++++++++++++++++++") 
-  console.log(donnees) // affiche "données à envoyer"
+  // console.log("+++++++++++++++++++++") 
+  // console.log(donnees) // affiche "données à envoyer"
   file_to_open = donnees;
   mainWindow.setTitle(file_to_open)
-  console.log("+++++++++++++++++++++") 
+  // console.log("+++++++++++++++++++++") 
 
 })
 
 function getFiles(p1, p2, p3) {
 
-	console.log("getFiles")
+	// console.log("getFiles")
 	
 	let files1 = fromDir(app.getPath("documents"), ".xlsx");
 	let files2 = fromDir(app.getPath("downloads"), ".xlsx");
@@ -168,7 +168,7 @@ function getFiles(p1, p2, p3) {
 
 function fromDir(startPath, filter) {
 	
-	console.log(startPath)
+	// console.log(startPath)
 	let excels = [];
 	
     if (!fs.existsSync(startPath)) {
@@ -212,9 +212,9 @@ async function readExcel() {
 		var wb = new Excel.Workbook();
 		// var path = require('path');
 		// var filePath = '/home/frc/Documents/AMIENS-Programmation.xlsx';
-    console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
-    console.log(`file_to_open=${file_to_open}`)
-    console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+    // console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
+    // console.log(`file_to_open=${file_to_open}`)
+    // console.log("°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°")
 	
 		const re = await wb.xlsx.readFile(file_to_open).then(function () {
 	
