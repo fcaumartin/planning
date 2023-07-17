@@ -59,6 +59,7 @@ async function createWindow() {
       //contextIsolation: true,
     },
   })
+  // mainWindow.setTitle()
   mainWindow = win
 
   if (process.env.VITE_DEV_SERVER_URL) { // electron-vite-vue#298
@@ -141,7 +142,7 @@ ipcMain.on('choice', (event, donnees) => {
   // console.log("+++++++++++++++++++++") 
   // console.log(donnees) // affiche "données à envoyer"
   file_to_open = donnees;
-  mainWindow.setTitle(file_to_open)
+  mainWindow.setTitle(file_to_open + " - " + app.getVersion())
   // console.log("+++++++++++++++++++++") 
 
 })
