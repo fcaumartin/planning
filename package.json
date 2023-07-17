@@ -6,7 +6,7 @@
     "email": "kill@bill.com"
   },
   "private": true,
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "vite",
@@ -19,7 +19,6 @@
     "electron-updater": "^5.3.0",
     "exceljs": "^4.3.0",
     "moment": "^2.29.4"
-
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
