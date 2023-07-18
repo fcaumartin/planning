@@ -26,9 +26,9 @@ function Formation({index, elt}) {
 			
 			<span> - {elt.osia1 || elt.osia2 || ""} </span> 
 			&nbsp;-&nbsp;
-			{elt.formateur || <span className="enrouge">???</span>}
+			{elt.formateur || <span className="enrouge">?</span>}
 			&nbsp;-&nbsp;
-			{elt.af || <span className="enrouge">???</span>}
+			{elt.af || <span className="enrouge">?</span>}
 			&nbsp;-&nbsp;
 			<b>{elt.stagiaires_reel && ("[" + elt.stagiaires_reel + "]")}</b>
 
