@@ -19,6 +19,7 @@ const ganttSlice = createSlice({
     },
     reducers: {
         loadExcel: (state, action) => {
+            console.log("load Excel")
 
             state.data = action.payload
             state.grns = tools.getGRN(state.data)
@@ -28,7 +29,18 @@ const ganttSlice = createSlice({
             state.formateurs = tools.getFormateurs(state.data)
 			state.selectedFormateurs = [...state.formateurs]
 
-			state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
+            let tmp = [...state.data].sort((a,b) => {
+                if (a.debut>b.debut) return 1
+                else if (a.debut<b.debut) return -1
+                else 
+                    if (a.sigle>b.sigle) return 1
+                    else if (a.sigle<b.sigle) return -1
+                    else return 0
+            })
+            state.data = tmp
+
+            console.log(tmp)
+			state.filtered = tmp.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
 
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
@@ -44,10 +56,13 @@ const ganttSlice = createSlice({
             // console.log("--loading-Excel----------------------")
             // console.log(state)
             // console.log("-------------------------------------")
+
+
             
             return state;
         },
         changeSelectedGrns: (state, action) => {
+            console.log("selected GRN")
             state.selectedGrns = action.payload
             state.sigles = tools.getSigles(state.data, state.selectedGrns)
             state.selectedSigles = [...state.sigles]
@@ -72,6 +87,8 @@ const ganttSlice = createSlice({
             return state;
         },
         changeSelectedSigles: (state, action) => {
+            console.log("selected Sigle")
+
             state.selectedSigles = action.payload
 
             state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
@@ -89,6 +106,8 @@ const ganttSlice = createSlice({
             return state;
         },
         changeSelectedFormateurs: (state, action) => {
+            console.log("selected Formateur")
+
             state.selectedFormateurs = action.payload
 
             state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
