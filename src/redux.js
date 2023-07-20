@@ -14,6 +14,7 @@ const ganttSlice = createSlice({
         selectedFormateurs: [],
         sigles: [],
         selectedSigles: [],
+        stagiaires: [],
         tsDebut: 0,
         tsFin: 0
     },
@@ -29,33 +30,22 @@ const ganttSlice = createSlice({
             state.formateurs = tools.getFormateurs(state.data)
 			state.selectedFormateurs = [...state.formateurs]
 
-            let tmp = [...state.data].sort((a,b) => {
-                if (a.debut>b.debut) return 1
-                else if (a.debut<b.debut) return -1
-                else 
-                    if (a.sigle>b.sigle) return 1
-                    else if (a.sigle<b.sigle) return -1
-                    else return 0
-            })
-            state.data = tmp
-
-            console.log(tmp)
-			state.filtered = tmp.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
-
+			state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
-				if (o.tsDebut<min) min=o.tsDebut;
+                if (o.tsDebut<min) min=o.tsDebut;
 				if (o.tsFin>max) max=o.tsFin;
 			}
 			let mom_min = moment.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
 			let mom_max = moment.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
+            
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
 
-
-            // console.log("--loading-Excel----------------------")
-            // console.log(state)
-            // console.log("-------------------------------------")
+            console.log("--loading-Excel----------------------")
+            console.log(state.stagiaires)
+            console.log("-------------------------------------")
 
 
             
@@ -67,8 +57,8 @@ const ganttSlice = createSlice({
             state.sigles = tools.getSigles(state.data, state.selectedGrns)
             state.selectedSigles = [...state.sigles]
 
-            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
-
+            state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
+            
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
 				if (o.tsDebut<min) min=o.tsDebut;
@@ -79,6 +69,7 @@ const ganttSlice = createSlice({
 			let mom_max = moment.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
 
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
 
             // console.log("--loading-Excel----------------------")
             // console.log(state)
@@ -91,8 +82,8 @@ const ganttSlice = createSlice({
 
             state.selectedSigles = action.payload
 
-            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
-
+            state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
+            
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
 				if (o.tsDebut<min) min=o.tsDebut;
@@ -102,6 +93,8 @@ const ganttSlice = createSlice({
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
 			let mom_max = moment.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
+
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
 
             return state;
         },
@@ -110,8 +103,8 @@ const ganttSlice = createSlice({
 
             state.selectedFormateurs = action.payload
 
-            state.filtered = state.data.filter ( v => state.selectedGrns.includes(v.grn) && state.selectedSigles.includes(v.sigle) && state.selectedFormateurs.includes(v.formateur)) 
-
+            state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
+            
             let min=4000000000, max=0;
 			for (const o of state.filtered) {
 				if (o.tsDebut<min) min=o.tsDebut;
@@ -121,6 +114,8 @@ const ganttSlice = createSlice({
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
 			let mom_max = moment.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
+
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut-36000, state.tsFin)
 
             return state;
         }

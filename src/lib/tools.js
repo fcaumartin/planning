@@ -145,7 +145,8 @@ const tools = {
 			let osia2 = o[21] || ""
 			let osiacertif = o[22] || ""
 			let duree = o[23] || ""
-			let stagiaires_reel = o[40] ? o[40].result : "Non renseigné"
+			let stagiaires_reel = o[40] ? o[40].result : 0
+			stagiaires_reel = stagiaires_reel?stagiaires_reel:0
 			let stagiaires_prevu = o[41] ? o[41].result : "Nom"
 			let interruption1d1 = o[42] && moment(o[42])
 			let interruption1d2 = o[43] && moment(o[43])
@@ -258,8 +259,52 @@ const tools = {
 			}
 		}
 		return tmp.sort()
-	}
+	},
 
+	getStagiairesByWeek: (filtered, d1, d2) => {
+
+		console.log("starting ...")
+        let s_inc = d1
+		let stagiaires = [];
+        let old_value = -1;
+		console.log("starting at " + moment(s_inc).format("DD/MM/YYYY"))
+		while (s_inc<d2) {
+			
+			let wn = moment.unix(s_inc)
+			
+			if (old_value !== wn.week()) {
+
+				let total = 0;
+				filtered.forEach((v) => {
+					// console.log(v)
+					console.log(wn.isoWeek(), " ", wn.date(), wn.month(), wn.year(), v.sigle, v.osia1, v.tsDebut, v.tsFin, s_inc)
+					if (s_inc>=(v.tsDebut-36000) && s_inc<=v.tsFin) {
+						total += v.stagiaires_reel
+						console.log("ok")
+					}
+				})
+				
+				stagiaires.push(total)
+                old_value = wn.week()
+			}
+			s_inc += 86400;
+		}
+
+        return stagiaires
+    },
+
+	bigFilter: (data, grns, sigles, formateurs) => {
+        return data
+			.filter ( v => grns.includes(v.grn) && sigles.includes(v.sigle) && formateurs.includes(v.formateur)) 
+			.sort((a,b) => {
+				if (a.tsDebut>b.tsDebut) return 1
+				else if (a.tsDebut<b.tsDebut) return -1
+				else 
+					if (a.sigle>b.sigle) return 1
+					else if (a.sigle<b.sigle) return -1
+					else return 0
+			})
+    },
 }
 
 

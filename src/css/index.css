@@ -68,11 +68,13 @@ fieldset button {
     padding: 0px;
     display: block;
     background-color: rgb(79, 199, 255);
-    overflow: hidden;
+    overflow-x: visible;
+    overflow-y: visible;
     border-radius: 5px;
     border-bottom: 2px solid #e1e1e1;
     border-top: 2px solid #e1e1e1;
     /* vertical-align: middle; */
+    white-space: nowrap;
 }
 
 .entreprise {
@@ -172,6 +174,21 @@ fieldset button {
     overflow: hidden;
 }
 
+.stagiaires {
+    white-space: nowrap;
+}
+.stagiaire {
+    border-right: 2px solid rgb(183, 183, 183);
+    display: inline-block;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 20px;
+    font-size: 0.9em;
+    color: rgb(0, 153, 102);
+    overflow: hidden;
+    font-weight: bold;
+}
 
 .month {
     border-right: 2px solid rgb(183, 183, 183);

@@ -54,6 +54,19 @@ function Fond1 (props) {
 					)
 				}
 			</div>
+			<div className="stagiaires">
+				{
+					gantt.stagiaires.map( (v, i) => 
+						<div 
+							key={i} 
+							className="stagiaire" 
+							style={ { width: ((config.largeurJour)*weeksLength[i])-2 } }
+						>
+							{v}
+						</div>
+					)
+				}
+			</div>
 			
 		</div>
 	);
