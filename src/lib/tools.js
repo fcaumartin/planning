@@ -1,5 +1,10 @@
 import moment from "moment";
-import "moment/locale/fr";
+import "moment/locale/fr.js";
+
+moment.locale('fr', { week: {
+	dow: 1, // First day of week is Monday
+	doy: 4  // First week of year must contain 4 January (7 + 1 - 4)
+  }})
 
 const feries = [
 	["2023-01-01", "2023-01-01"],
@@ -44,16 +49,17 @@ const tools = {
 		let old_value=-1
 		let arr_month = [];
 		let arr_month_length = [];
-		while (m_inc<d2) {
+		let wn = moment.unix(m_inc)
+		while (wn.unix()<d2) {
 			
-			let wn = moment.unix(m_inc)
 			if (old_value !== wn.month()) {
 
 				arr_month_length.push(wn.daysInMonth())
 				arr_month.push(wn.format("MMM YYYY"))
 				old_value = wn.month()
 			}
-			m_inc += 86400;
+			wn.add(1, 'days')
+			// m_inc += 86400;
 		}
 
         return [arr_month, arr_month_length];
@@ -64,9 +70,9 @@ const tools = {
 		let arr_week = [];
 		let arr_week_length = [];
         let old_value = -1;
-		while (s_inc<d2) {
+		let wn = moment.unix(s_inc)
+		while (wn.unix()<d2) {
 			
-			let wn = moment.unix(s_inc)
 			
 			if (old_value !== wn.week()) {
 
@@ -80,7 +86,8 @@ const tools = {
 				arr_week.push(wn.week())
                 old_value = wn.week()
 			}
-			s_inc += 86400;
+			wn.add(1, "days")
+			// s_inc += 86400;
 		}
 
         return [arr_week, arr_week_length]
@@ -91,11 +98,11 @@ const tools = {
 		let arr = [];
 		let arr_end_of_month = [];
 		let now = moment().format("DD/MM/YYYY")
-		while (j_inc<d2)  {
+		let jj = moment.unix(j_inc)
+		while (jj.unix()<d2)  {
 			let info_jour = "";
-			let jj = moment.unix(j_inc)
 			// console.log(jj.format("DD/MM/YYYY HH:mm:ss"))
-			let m1 = moment.unix(j_inc+86400)
+			let m1 = moment(jj).add(1, 'days')
 			if (now === jj.format("DD/MM/YYYY"))
 				info_jour += " aujourdhui ";
 			if(m1.month() !== jj.month()) 
@@ -109,7 +116,8 @@ const tools = {
 			info_jour += ferie;
 			arr_end_of_month.push(info_jour);
 			arr.push (jj.format("DD/MM/YYYY"));
-			j_inc += 86400
+			// j_inc += 86400
+			jj.add(1, 'days')
 		}
 
         return [arr, arr_end_of_month]
@@ -126,6 +134,8 @@ const tools = {
 
 			let d1 = moment(o[10])
 			let d2 = moment(o[11])
+			let debut = d1
+			let fin = d2
 			let pe1d1 = o[12] && moment(o[12])
 			let pe1d2 = o[13] && moment(o[13])
 			let pe2d1 = o[14] && moment(o[14])
@@ -153,18 +163,18 @@ const tools = {
 			let interruption2d1 = o[44] && moment(o[44])
 			let interruption2d2 = o[45] && moment(o[45])
 			
-			let tsDebut = d1.unix() + 36000
-			let tsFin = d2.unix() + 36000
-			let pe1Debut = pe1d1 ? pe1d1.unix() + 36000: undefined
-			let pe1Fin = pe1d2 ? pe1d2.unix() + 36000: undefined
-			let pe2Debut = pe2d1 ? pe2d1.unix() + 36000: undefined
-			let pe2Fin = pe2d2 ? pe2d2.unix() + 36000: undefined
-			let interruption1Debut = interruption1d1 ? interruption1d1.unix() + 36000: undefined
-			let interruption1Fin = interruption1d2 ? interruption1d2.unix() + 36000: undefined
-			let interruption2Debut = interruption2d1 ? interruption2d1.unix() + 36000: undefined
-			let interruption2Fin = interruption2d2 ? interruption2d2.unix() + 36000: undefined
-			let certifDebut = certifd1 ? certifd1.unix() + 36000: undefined
-			let certifFin = certifd2 ? certifd2.unix() + 36000: undefined
+			let tsDebut = d1.unix() + 0
+			let tsFin = d2.unix() + 0
+			let pe1Debut = pe1d1 ? pe1d1.unix() + 0: undefined
+			let pe1Fin = pe1d2 ? pe1d2.unix() + 0: undefined
+			let pe2Debut = pe2d1 ? pe2d1.unix() + 0: undefined
+			let pe2Fin = pe2d2 ? pe2d2.unix() + 0: undefined
+			let interruption1Debut = interruption1d1 ? interruption1d1.unix() + 0: undefined
+			let interruption1Fin = interruption1d2 ? interruption1d2.unix() + 0: undefined
+			let interruption2Debut = interruption2d1 ? interruption2d1.unix() + 0: undefined
+			let interruption2Fin = interruption2d2 ? interruption2d2.unix() + 0: undefined
+			let certifDebut = certifd1 ? certifd1.unix() + 0: undefined
+			let certifFin = certifd2 ? certifd2.unix() + 0: undefined
 			let dateDebut = d1.format("DD/MM/YYYY")
 			let dateFin = d2.format("DD/MM/YYYY")
 			let titre = sigle + " - " + ((osia1 || osia2) || "") + " - " + formateur + " - " + af
@@ -198,6 +208,7 @@ const tools = {
 				formateur, 
 				optex, 
 				af, 
+				debut, fin,
 				tsDebut, tsFin, 
 				dateDebut, dateFin, 
 				description, 
@@ -264,21 +275,30 @@ const tools = {
 	getStagiairesByWeek: (filtered, d1, d2) => {
 
 		console.log("starting ...")
-        let s_inc = d1
+        let s_inc = d1.startOf('week')
 		let stagiaires = [];
         let old_value = -1;
-		console.log("starting at " + moment(s_inc).format("DD/MM/YYYY"))
-		while (s_inc<d2) {
+		console.log("starting at " + moment(d1).format("DD/MM/YYYY"))
+		d1.isoWeekday()
+		let wn = moment(d1.startOf('week')).add(2, 'h')
+		while (wn.isSameOrBefore(d2)) {
 			
-			let wn = moment.unix(s_inc)
 			
 			if (old_value !== wn.week()) {
 
 				let total = 0;
 				filtered.forEach((v) => {
-					// console.log(v)
-					console.log(wn.isoWeek(), " ", wn.date(), wn.month(), wn.year(), v.sigle, v.osia1, v.tsDebut, v.tsFin, s_inc)
-					if (s_inc>=(v.tsDebut-36000) && s_inc<=v.tsFin) {
+					if (wn.year()==2023 && wn.week()==26) {
+
+						console.log("--------------------------------------------------------")
+						console.log(wn.year() + " " + wn.week())
+						console.log(v.sigle, v.osia1)
+						console.log(v.debut.format("DD/MM/YYYY HH:mm:SS"))
+						console.log(v.fin.format("DD/MM/YYYY HH:mm:SS"))
+						console.log(wn.format("DD/MM/YYYY HH:mm:SS"))
+					}
+					// if (wn.unix()>=(v.tsDebut-0) && wn.unix()<=v.tsFin) {
+					if (wn.isBetween(v.debut, v.fin, undefined, 'day')) {
 						total += v.stagiaires_reel
 						console.log("ok")
 					}
@@ -287,7 +307,8 @@ const tools = {
 				stagiaires.push(total)
                 old_value = wn.week()
 			}
-			s_inc += 86400;
+			wn = moment(wn.add(1, 'days'))
+			// s_inc += wn.unix()
 		}
 
         return stagiaires
