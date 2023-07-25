@@ -4,10 +4,12 @@ import "dayjs/locale/fr";
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import isBetween from 'dayjs/plugin/isBetween'
+import weekday from 'dayjs/plugin/weekday'
 
 dayjs.extend(isSameOrBefore)
 dayjs.extend(weekOfYear)
 dayjs.extend(isBetween)
+dayjs.extend(weekday)
 dayjs.locale('fr')
 
 const feries = [
@@ -62,7 +64,7 @@ const tools = {
 				arr_month.push(wn.format("MMM YYYY"))
 				old_value = wn.month()
 			}
-			wn.add(1, 'days')
+			wn = wn.add(1, 'days')
 			// m_inc += 86400;
 		}
 
@@ -90,7 +92,7 @@ const tools = {
 				arr_week.push(wn.week())
                 old_value = wn.week()
 			}
-			wn.add(1, "days")
+			wn = wn.add(1, "days")
 			// s_inc += 86400;
 		}
 
@@ -111,7 +113,7 @@ const tools = {
 				info_jour += " aujourdhui ";
 			if(m1.month() !== jj.month()) 
 				info_jour += " jour_fin_de_mois ";
-			if (jj.isoWeekday()===6 ||jj.isoWeekday()===7)
+			if (jj.weekday()===6 ||jj.weekday()===7)
 				info_jour += " jour_we ";
 			let ferie = "";
 			for (const fe of feries) {
@@ -121,7 +123,7 @@ const tools = {
 			arr_end_of_month.push(info_jour);
 			arr.push (jj.format("DD/MM/YYYY"));
 			// j_inc += 86400
-			jj.add(1, 'days')
+			jj = jj.add(1, 'days')
 		}
 
         return [arr, arr_end_of_month]
