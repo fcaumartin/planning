@@ -1,13 +1,10 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit"
 import { tools } from "./lib/tools"
 import config from "./config"
-import moment from "moment"
-import "moment/locale/fr.js";
+import dayjs from "dayjs";
+import "dayjs/locale/fr";
 
-moment.locale('fr', { week: {
-    dow: 1, // First day of week is Monday
-    doy: 4  // First week of year must contain 4 January (7 + 1 - 4)
-  }})
+dayjs.locale('fr')
 
 const ganttSlice = createSlice({
     name: "gantt2",
@@ -23,8 +20,8 @@ const ganttSlice = createSlice({
         stagiaires: [],
         tsDebut: 0,
         tsFin: 0,
-        debut: moment(),
-        fin: moment()
+        debut: dayjs(),
+        fin: dayjs()
     },
     reducers: {
         loadExcel: (state, action) => {
@@ -45,14 +42,14 @@ const ganttSlice = createSlice({
 				if (o.tsFin>max) max=o.tsFin;
 			}
             for (const o of state.filtered) {
-                if (state.debut.isAfter(o.debut)) state.debut = moment(o.debut)
-				if (state.fin.isBefore(o.fin)) state.fin = moment(o.fin)
+                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
+				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
 			}
             state.debut.startOf("month").startOf("week")
             state.fin.endOf('month').endOf('week')
-			let mom_min = moment.unix(min);
+			let mom_min = dayjs.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix();
-			let mom_max = moment.unix(max + 86400).endOf("month");
+			let mom_max = dayjs.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
@@ -78,9 +75,9 @@ const ganttSlice = createSlice({
 				if (o.tsDebut<min) min=o.tsDebut;
 				if (o.tsFin>max) max=o.tsFin;
 			}
-			let mom_min = moment.unix(min);
+			let mom_min = dayjs.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = moment.unix(max + 86400).endOf("month");
+			let mom_max = dayjs.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
 
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
@@ -103,9 +100,9 @@ const ganttSlice = createSlice({
 				if (o.tsDebut<min) min=o.tsDebut;
 				if (o.tsFin>max) max=o.tsFin;
 			}
-			let mom_min = moment.unix(min);
+			let mom_min = dayjs.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = moment.unix(max + 86400).endOf("month");
+			let mom_max = dayjs.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
 
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
@@ -124,9 +121,9 @@ const ganttSlice = createSlice({
 				if (o.tsDebut<min) min=o.tsDebut;
 				if (o.tsFin>max) max=o.tsFin;
 			}
-			let mom_min = moment.unix(min);
+			let mom_min = dayjs.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = moment.unix(max + 86400).endOf("month");
+			let mom_max = dayjs.unix(max + 86400).endOf("month");
 			state.tsFin = mom_max.unix()+36000;
 
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut-36000, state.tsFin)

@@ -1,10 +1,14 @@
-import moment from "moment";
-import "moment/locale/fr.js";
+import dayjs from "dayjs";
+import "dayjs/locale/fr";
+// import 'dayjs/plugin/isSameOrBefore'
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import weekOfYear from 'dayjs/plugin/weekOfYear'
+import isBetween from 'dayjs/plugin/isBetween'
 
-moment.locale('fr', { week: {
-	dow: 1, // First day of week is Monday
-	doy: 4  // First week of year must contain 4 January (7 + 1 - 4)
-  }})
+dayjs.extend(isSameOrBefore)
+dayjs.extend(weekOfYear)
+dayjs.extend(isBetween)
+dayjs.locale('fr')
 
 const feries = [
 	["2023-01-01", "2023-01-01"],
@@ -31,12 +35,12 @@ const tools = {
     parseTS: (dd) => {
 
 
-        return moment.unix(dd).format("DD/MM/YYYY");
+        return dayjs.unix(dd).format("DD/MM/YYYY");
     },
 
     parseFR: (dd) => {
 
-        return moment(dd, "DD/MM/YYYY").unix();
+        return dayjs(dd, "DD/MM/YYYY").unix();
     },
     
     diffTsToDays: (d1, d2) => {
@@ -49,7 +53,7 @@ const tools = {
 		let old_value=-1
 		let arr_month = [];
 		let arr_month_length = [];
-		let wn = moment.unix(m_inc)
+		let wn = dayjs.unix(m_inc)
 		while (wn.unix()<d2) {
 			
 			if (old_value !== wn.month()) {
@@ -70,7 +74,7 @@ const tools = {
 		let arr_week = [];
 		let arr_week_length = [];
         let old_value = -1;
-		let wn = moment.unix(s_inc)
+		let wn = dayjs.unix(s_inc)
 		while (wn.unix()<d2) {
 			
 			
@@ -97,12 +101,12 @@ const tools = {
         let j_inc = d1
 		let arr = [];
 		let arr_end_of_month = [];
-		let now = moment().format("DD/MM/YYYY")
-		let jj = moment.unix(j_inc)
+		let now = dayjs().format("DD/MM/YYYY")
+		let jj = dayjs.unix(j_inc)
 		while (jj.unix()<d2)  {
 			let info_jour = "";
 			// console.log(jj.format("DD/MM/YYYY HH:mm:ss"))
-			let m1 = moment(jj).add(1, 'days')
+			let m1 = dayjs(jj).add(1, 'days')
 			if (now === jj.format("DD/MM/YYYY"))
 				info_jour += " aujourdhui ";
 			if(m1.month() !== jj.month()) 
@@ -124,7 +128,7 @@ const tools = {
     },
 
 	isNow: (dd) => {
-		return moment.format("DD/MM/YYYY") === dd;
+		return dayjs.format("DD/MM/YYYY") === dd;
 	},
 
 	rawToData: (raw) => {
@@ -132,16 +136,16 @@ const tools = {
 
 		for (let o of raw ) {
 
-			let d1 = moment(o[10])
-			let d2 = moment(o[11])
+			let d1 = dayjs(o[10])
+			let d2 = dayjs(o[11])
 			let debut = d1
 			let fin = d2
-			let pe1d1 = o[12] && moment(o[12])
-			let pe1d2 = o[13] && moment(o[13])
-			let pe2d1 = o[14] && moment(o[14])
-			let pe2d2 = o[15] && moment(o[15])
-			let certifd1 = o[16] && moment(o[16])
-			let certifd2 = o[17] && moment(o[17])
+			let pe1d1 = o[12] && dayjs(o[12])
+			let pe1d2 = o[13] && dayjs(o[13])
+			let pe2d1 = o[14] && dayjs(o[14])
+			let pe2d2 = o[15] && dayjs(o[15])
+			let certifd1 = o[16] && dayjs(o[16])
+			let certifd2 = o[17] && dayjs(o[17])
 			let grn = o[1] || ""
 			let sigle = o[2] || ""
 			let libelle = o[3] || ""
@@ -158,10 +162,10 @@ const tools = {
 			let stagiaires_reel = o[40] ? o[40].result : 0
 			stagiaires_reel = stagiaires_reel?stagiaires_reel:0
 			let stagiaires_prevu = o[41] ? o[41].result : "Nom"
-			let interruption1d1 = o[42] && moment(o[42])
-			let interruption1d2 = o[43] && moment(o[43])
-			let interruption2d1 = o[44] && moment(o[44])
-			let interruption2d2 = o[45] && moment(o[45])
+			let interruption1d1 = o[42] && dayjs(o[42])
+			let interruption1d2 = o[43] && dayjs(o[43])
+			let interruption2d1 = o[44] && dayjs(o[44])
+			let interruption2d2 = o[45] && dayjs(o[45])
 			
 			let tsDebut = d1.unix() + 0
 			let tsFin = d2.unix() + 0
@@ -278,9 +282,9 @@ const tools = {
         let s_inc = d1.startOf('week')
 		let stagiaires = [];
         let old_value = -1;
-		console.log("starting at " + moment(d1).format("DD/MM/YYYY"))
-		d1.isoWeekday()
-		let wn = moment(d1.startOf('week')).add(2, 'h')
+		console.log("starting at " + dayjs(d1).format("DD/MM/YYYY"))
+		// d1.isoWeekday()
+		let wn = dayjs(d1.startOf('week')).add(2, 'h')
 		while (wn.isSameOrBefore(d2)) {
 			
 			
@@ -288,7 +292,7 @@ const tools = {
 
 				let total = 0;
 				filtered.forEach((v) => {
-					if (wn.year()==2023 && wn.week()==26) {
+					// if (wn.year()==2023 && wn.week()==26) {
 
 						console.log("--------------------------------------------------------")
 						console.log(wn.year() + " " + wn.week())
@@ -296,7 +300,7 @@ const tools = {
 						console.log(v.debut.format("DD/MM/YYYY HH:mm:SS"))
 						console.log(v.fin.format("DD/MM/YYYY HH:mm:SS"))
 						console.log(wn.format("DD/MM/YYYY HH:mm:SS"))
-					}
+					// }
 					// if (wn.unix()>=(v.tsDebut-0) && wn.unix()<=v.tsFin) {
 					if (wn.isBetween(v.debut, v.fin, undefined, 'day')) {
 						total += v.stagiaires_reel
@@ -307,7 +311,7 @@ const tools = {
 				stagiaires.push(total)
                 old_value = wn.week()
 			}
-			wn = moment(wn.add(1, 'days'))
+			wn = wn.add(1, 'days')
 			// s_inc += wn.unix()
 		}
 
