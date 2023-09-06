@@ -113,7 +113,7 @@ const tools = {
 				info_jour += " aujourdhui ";
 			if(m1.month() !== jj.month()) 
 				info_jour += " jour_fin_de_mois ";
-			if (jj.weekday()===6 ||jj.weekday()===7)
+			if (jj.weekday()===5 || jj.weekday()===6)
 				info_jour += " jour_we ";
 			let ferie = "";
 			for (const fe of feries) {
@@ -122,9 +122,12 @@ const tools = {
 			info_jour += ferie;
 			arr_end_of_month.push(info_jour);
 			arr.push (jj.format("DD/MM/YYYY"));
+			console.log(jj.format("DD/MM/YYYY") + " --> " + jj.weekday())
 			// j_inc += 86400
 			jj = jj.add(1, 'days')
 		}
+		// console.log(arr)
+		// console.log(arr_end_of_month)
 
         return [arr, arr_end_of_month]
     },
