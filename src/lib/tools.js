@@ -122,7 +122,7 @@ const tools = {
 			info_jour += ferie;
 			arr_end_of_month.push(info_jour);
 			arr.push (jj.format("DD/MM/YYYY"));
-			console.log(jj.format("DD/MM/YYYY") + " --> " + jj.weekday())
+			// console.log(jj.format("DD/MM/YYYY") + " --> " + jj.weekday())
 			// j_inc += 86400
 			jj = jj.add(1, 'days')
 		}
@@ -140,9 +140,9 @@ const tools = {
 		let tmp = []
 
 		for (let o of raw ) {
-
-			let d1 = dayjs(o[10])
-			let d2 = dayjs(o[11])
+			console.log(o)
+			let d1 = dayjs(o[10]).hour(0)
+			let d2 = dayjs(o[11]).hour(0)
 			let debut = d1
 			let fin = d2
 			let pe1d1 = o[12] && dayjs(o[12])
@@ -289,7 +289,7 @@ const tools = {
         let old_value = -1;
 		console.log("starting at " + dayjs(d1).format("DD/MM/YYYY"))
 		// d1.isoWeekday()
-		let wn = dayjs(d1.startOf('week')).add(2, 'h')
+		let wn = dayjs(d1.startOf('week'))
 		while (wn.isSameOrBefore(d2)) {
 			
 			
@@ -302,12 +302,12 @@ const tools = {
 						console.log("--------------------------------------------------------")
 						console.log(wn.year() + " " + wn.week())
 						console.log(v.sigle, v.osia1)
-						console.log(v.debut.format("DD/MM/YYYY HH:mm:SS"))
-						console.log(v.fin.format("DD/MM/YYYY HH:mm:SS"))
-						console.log(wn.format("DD/MM/YYYY HH:mm:SS"))
+						console.log(v.debut.format("DD/MM/YYYY HH:mm:ss"))
+						console.log(v.fin.format("DD/MM/YYYY HH:mm:ss"))
+						console.log(wn.format("DD/MM/YYYY HH:mm:ss"))
 					// }
 					// if (wn.unix()>=(v.tsDebut-0) && wn.unix()<=v.tsFin) {
-					if (wn.isBetween(v.debut, v.fin, undefined, 'day')) {
+					if (wn.isBetween(v.debut, v.fin, undefined, 'day') && !wn.isBetween(v.debut, v.fin, undefined, 'day')) {
 						total += v.stagiaires_reel
 						console.log("ok")
 					}

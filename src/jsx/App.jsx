@@ -30,18 +30,18 @@ function App() {
 	const dispatch = useDispatch();
 
 	const callGetFiles = async () => {
-		console.log("111")
+		// console.log("111")
 		window.scrollTo(0,0)
 		setDialog(true)
 		setFiles([])
 		setLoading(true)
 		let tab = await window.electronAPI.getFiles();
 		setLoading(false)
-		console.log("222")
+		// console.log("222")
 		setFiles(tab);
-		console.log("-RAW----------------------------")
-		console.log(tab)
-	  	console.log("-----------------------------")
+		// console.log("-RAW----------------------------")
+		// console.log(tab)
+	  	// console.log("-----------------------------")
 	}
 
 	const handleSelectFile = (elt) => {

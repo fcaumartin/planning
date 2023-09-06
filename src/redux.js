@@ -25,7 +25,7 @@ const ganttSlice = createSlice({
     },
     reducers: {
         loadExcel: (state, action) => {
-            console.log("load Excel")
+            // console.log("load Excel")
 
             state.data = action.payload
             state.grns = tools.getGRN(state.data)
@@ -45,8 +45,8 @@ const ganttSlice = createSlice({
                 if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
 				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
 			}
-            state.debut.startOf("month").startOf("week")
-            state.fin.endOf('month').endOf('week')
+            state.debut = state.debut.startOf("month").startOf("week")
+            state.fin = state.fin.endOf('month').endOf('week')
 			let mom_min = dayjs.unix(min);
 			state.tsDebut = mom_min.startOf("month").unix();
 			let mom_max = dayjs.unix(max + 86400).endOf("month");
