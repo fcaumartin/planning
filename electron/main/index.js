@@ -228,7 +228,7 @@ async function readExcel() {
 				result.push(
 					sh.getRow(i).values
         );
-        console.log(sh.getRow(i).values)
+        // console.log(sh.getRow(i).values)
 			}
 		}
 	

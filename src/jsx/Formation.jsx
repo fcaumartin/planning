@@ -37,8 +37,8 @@ function Formation({index, elt}) {
 									className="entreprise" 
 									style={{
 										top: 0, 
-										left: tools.diffTsToDays(elt.pe1Debut, elt.tsDebut)*config.largeurJour, 
-										width: (tools.diffTsToDays(elt.pe1Debut, elt.pe1Fin)+1)*config.largeurJour, 
+										left: tools.diffTsToDays(elt.pe1Debut.unix(), elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.pe1Debut.unix(), elt.pe1Fin.unix())+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>
@@ -50,8 +50,8 @@ function Formation({index, elt}) {
 									className="entreprise" 
 									style={{
 										top: 0, 
-										left: tools.diffTsToDays(elt.pe2Debut, elt.tsDebut)*config.largeurJour, 
-										width: (tools.diffTsToDays(elt.pe2Debut, elt.pe2Fin)+1)*config.largeurJour, 
+										left: tools.diffTsToDays(elt.pe2Debut.unix(), elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.pe2Debut.unix(), elt.pe2Fin.unix())+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>
@@ -63,8 +63,8 @@ function Formation({index, elt}) {
 									className="conges" 
 									style={{
 										top: 0, 
-										left: tools.diffTsToDays(elt.interruption1Debut, elt.tsDebut)*config.largeurJour, 
-										width: (tools.diffTsToDays(elt.interruption1Debut, elt.interruption1Fin)+1)*config.largeurJour, 
+										left: tools.diffTsToDays(elt.interruption1Debut.unix(), elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.interruption1Debut.unix(), elt.interruption1Fin.unix())+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>
@@ -76,8 +76,8 @@ function Formation({index, elt}) {
 									className="conges" 
 									style={{
 										top: 0, 
-										left: tools.diffTsToDays(elt.interruption2Debut, elt.tsDebut)*config.largeurJour, 
-										width: (tools.diffTsToDays(elt.interruption2Debut, elt.interruption2Fin)+1)*config.largeurJour, 
+										left: tools.diffTsToDays(elt.interruption2Debut.unix(), elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.interruption2Debut.unix(), elt.interruption2Fin.unix())+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>
@@ -89,8 +89,8 @@ function Formation({index, elt}) {
 									className="certification" 
 									style={{
 										top: 0, 
-										left: tools.diffTsToDays(elt.certifDebut, elt.tsDebut)*config.largeurJour, 
-										width: (tools.diffTsToDays(elt.certifDebut, elt.certifFin)+1)*config.largeurJour, 
+										left: tools.diffTsToDays(elt.certifDebut.unix(), elt.tsDebut)*config.largeurJour, 
+										width: (tools.diffTsToDays(elt.certifDebut.unix(), elt.certifFin.unix())+1)*config.largeurJour, 
 										height: config.hauteurFormation 
 									}}
 								>

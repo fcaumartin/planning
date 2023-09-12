@@ -36,29 +36,23 @@ const ganttSlice = createSlice({
 			state.selectedFormateurs = [...state.formateurs]
 
 			state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
-            let min=4000000000, max=0;
-			for (const o of state.filtered) {
-                if (o.tsDebut<min) min=o.tsDebut;
-				if (o.tsFin>max) max=o.tsFin;
-			}
+
+            state.debut = dayjs().hour(0)
+            state.fin = dayjs().hour(0)
             for (const o of state.filtered) {
                 if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
 				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
 			}
             state.debut = state.debut.startOf("month").startOf("week")
             state.fin = state.fin.endOf('month').endOf('week')
-			let mom_min = dayjs.unix(min);
-			state.tsDebut = mom_min.startOf("month").unix();
-			let mom_max = dayjs.unix(max + 86400).endOf("month");
-			state.tsFin = mom_max.unix();
+			state.tsDebut = state.debut.unix();
+			state.tsFin = state.fin.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
-
+            
             console.log("--loading-Excel----------------------")
             console.log(state.stagiaires)
             console.log("-------------------------------------")
-
-
             
             return state;
         },
@@ -69,18 +63,19 @@ const ganttSlice = createSlice({
             state.selectedSigles = [...state.sigles]
 
             state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
-            
-            let min=4000000000, max=0;
-			for (const o of state.filtered) {
-				if (o.tsDebut<min) min=o.tsDebut;
-				if (o.tsFin>max) max=o.tsFin;
-			}
-			let mom_min = dayjs.unix(min);
-			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = dayjs.unix(max + 86400).endOf("month");
-			state.tsFin = mom_max.unix()+36000;
 
-            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
+            state.debut = dayjs().hour(0)
+            state.fin = dayjs().hour(0)
+            for (const o of state.filtered) {
+                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
+				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+			}
+            state.debut = state.debut.startOf("month").startOf("week")
+            state.fin = state.fin.endOf('month').endOf('week')
+			state.tsDebut = state.debut.unix();
+			state.tsFin = state.fin.unix();
+            
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 
             // console.log("--loading-Excel----------------------")
             // console.log(state)
@@ -94,18 +89,19 @@ const ganttSlice = createSlice({
             state.selectedSigles = action.payload
 
             state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
-            
-            let min=4000000000, max=0;
-			for (const o of state.filtered) {
-				if (o.tsDebut<min) min=o.tsDebut;
-				if (o.tsFin>max) max=o.tsFin;
-			}
-			let mom_min = dayjs.unix(min);
-			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = dayjs.unix(max + 86400).endOf("month");
-			state.tsFin = mom_max.unix()+36000;
 
-            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut, state.tsFin)
+            state.debut = dayjs().hour(0)
+            state.fin = dayjs().hour(0)
+            for (const o of state.filtered) {
+                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
+				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+			}
+            state.debut = state.debut.startOf("month").startOf("week")
+            state.fin = state.fin.endOf('month').endOf('week')
+			state.tsDebut = state.debut.unix();
+			state.tsFin = state.fin.unix();
+            
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 
             return state;
         },
@@ -115,18 +111,19 @@ const ganttSlice = createSlice({
             state.selectedFormateurs = action.payload
 
             state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
-            
-            let min=4000000000, max=0;
-			for (const o of state.filtered) {
-				if (o.tsDebut<min) min=o.tsDebut;
-				if (o.tsFin>max) max=o.tsFin;
-			}
-			let mom_min = dayjs.unix(min);
-			state.tsDebut = mom_min.startOf("month").unix()+36000;
-			let mom_max = dayjs.unix(max + 86400).endOf("month");
-			state.tsFin = mom_max.unix()+36000;
 
-            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.tsDebut-36000, state.tsFin)
+            state.debut = dayjs().hour(0)
+            state.fin = dayjs().hour(0)
+            for (const o of state.filtered) {
+                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
+				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+			}
+            state.debut = state.debut.startOf("month").startOf("week")
+            state.fin = state.fin.endOf('month').endOf('week')
+			state.tsDebut = state.debut.unix();
+			state.tsFin = state.fin.unix();
+            
+            state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 
             return state;
         }

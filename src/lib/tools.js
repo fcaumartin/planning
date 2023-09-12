@@ -140,17 +140,17 @@ const tools = {
 		let tmp = []
 
 		for (let o of raw ) {
-			console.log(o)
-			let d1 = dayjs(o[10]).hour(0)
-			let d2 = dayjs(o[11]).hour(0)
-			let debut = d1
-			let fin = d2
-			let pe1d1 = o[12] && dayjs(o[12])
-			let pe1d2 = o[13] && dayjs(o[13])
-			let pe2d1 = o[14] && dayjs(o[14])
-			let pe2d2 = o[15] && dayjs(o[15])
-			let certifd1 = o[16] && dayjs(o[16])
-			let certifd2 = o[17] && dayjs(o[17])
+			// console.log(o)
+			let debut = dayjs(o[10]).hour(0)
+			let fin = dayjs(o[11]).hour(0)
+			// let debut = d1
+			// let fin = d2
+			let pe1d1 = o[12] && dayjs(o[12]).hour(0)
+			let pe1d2 = o[13] && dayjs(o[13]).hour(0)
+			let pe2d1 = o[14] && dayjs(o[14]).hour(0)
+			let pe2d2 = o[15] && dayjs(o[15]).hour(0)
+			let certifd1 = o[16] && dayjs(o[16]).hour(0)
+			let certifd2 = o[17] && dayjs(o[17]).hour(0)
 			let grn = o[1] || ""
 			let sigle = o[2] || ""
 			let libelle = o[3] || ""
@@ -167,25 +167,25 @@ const tools = {
 			let stagiaires_reel = o[40] ? o[40].result : 0
 			stagiaires_reel = stagiaires_reel?stagiaires_reel:0
 			let stagiaires_prevu = o[41] ? o[41].result : "Nom"
-			let interruption1d1 = o[42] && dayjs(o[42])
-			let interruption1d2 = o[43] && dayjs(o[43])
-			let interruption2d1 = o[44] && dayjs(o[44])
-			let interruption2d2 = o[45] && dayjs(o[45])
+			let interruption1d1 = o[42] && dayjs(o[42]).hour(0)
+			let interruption1d2 = o[43] && dayjs(o[43]).hour(0)
+			let interruption2d1 = o[44] && dayjs(o[44]).hour(0)
+			let interruption2d2 = o[45] && dayjs(o[45]).hour(0)
 			
-			let tsDebut = d1.unix() + 0
-			let tsFin = d2.unix() + 0
-			let pe1Debut = pe1d1 ? pe1d1.unix() + 0: undefined
-			let pe1Fin = pe1d2 ? pe1d2.unix() + 0: undefined
-			let pe2Debut = pe2d1 ? pe2d1.unix() + 0: undefined
-			let pe2Fin = pe2d2 ? pe2d2.unix() + 0: undefined
-			let interruption1Debut = interruption1d1 ? interruption1d1.unix() + 0: undefined
-			let interruption1Fin = interruption1d2 ? interruption1d2.unix() + 0: undefined
-			let interruption2Debut = interruption2d1 ? interruption2d1.unix() + 0: undefined
-			let interruption2Fin = interruption2d2 ? interruption2d2.unix() + 0: undefined
-			let certifDebut = certifd1 ? certifd1.unix() + 0: undefined
-			let certifFin = certifd2 ? certifd2.unix() + 0: undefined
-			let dateDebut = d1.format("DD/MM/YYYY")
-			let dateFin = d2.format("DD/MM/YYYY")
+			let tsDebut = debut.unix() + 0
+			let tsFin = fin.unix() + 0
+			let pe1Debut = pe1d1 ? pe1d1 : undefined
+			let pe1Fin = pe1d2 ? pe1d2 : undefined
+			let pe2Debut = pe2d1 ? pe2d1: undefined
+			let pe2Fin = pe2d2 ? pe2d2: undefined
+			let interruption1Debut = interruption1d1 ? interruption1d1 : undefined
+			let interruption1Fin = interruption1d2 ? interruption1d2 : undefined
+			let interruption2Debut = interruption2d1 ? interruption2d1 : undefined
+			let interruption2Fin = interruption2d2 ? interruption2d2 : undefined
+			let certifDebut = certifd1 ? certifd1: undefined
+			let certifFin = certifd2 ? certifd2: undefined
+			let dateDebut = debut.format("DD/MM/YYYY")
+			let dateFin = fin.format("DD/MM/YYYY")
 			let titre = sigle + " - " + ((osia1 || osia2) || "") + " - " + formateur + " - " + af
 			if (stagiaires_reel>0) titre += " [" + stagiaires_reel + "]"
 
@@ -284,12 +284,12 @@ const tools = {
 	getStagiairesByWeek: (filtered, d1, d2) => {
 
 		console.log("starting ...")
-        let s_inc = d1.startOf('week')
+        //let s_inc = d1.startOf('week')
 		let stagiaires = [];
         let old_value = -1;
-		console.log("starting at " + dayjs(d1).format("DD/MM/YYYY"))
 		// d1.isoWeekday()
 		let wn = dayjs(d1.startOf('week'))
+		console.log("starting at " + wn.format("DD/MM/YYYY"))
 		while (wn.isSameOrBefore(d2)) {
 			
 			
@@ -297,17 +297,26 @@ const tools = {
 
 				let total = 0;
 				filtered.forEach((v) => {
-					// if (wn.year()==2023 && wn.week()==26) {
+					if (wn.year()==2024 && wn.week()==3) {
 
 						console.log("--------------------------------------------------------")
 						console.log(wn.year() + " " + wn.week())
 						console.log(v.sigle, v.osia1)
-						console.log(v.debut.format("DD/MM/YYYY HH:mm:ss"))
-						console.log(v.fin.format("DD/MM/YYYY HH:mm:ss"))
+						console.log("debut " + v.debut.format("DD/MM/YYYY HH:mm:ss"))
+						console.log("fin " + v.fin.format("DD/MM/YYYY HH:mm:ss"))
+						console.log("pe1 debut " + (v.pe1Debut?v.pe1Debut.format("DD/MM/YYYY HH:mm:ss"):""))
+						console.log("pe1 fin" + (v.pe1Fin?v.pe1Fin.format("DD/MM/YYYY HH:mm:ss"):""))
 						console.log(wn.format("DD/MM/YYYY HH:mm:ss"))
-					// }
+						console.log(v.stagiaires_reel)
+					}
 					// if (wn.unix()>=(v.tsDebut-0) && wn.unix()<=v.tsFin) {
-					if (wn.isBetween(v.debut, v.fin, undefined, 'day') && !wn.isBetween(v.debut, v.fin, undefined, 'day')) {
+					if (
+							wn.isBetween(v.debut, v.fin, undefined, 'day') 
+							&& !wn.isBetween(v.pe1Debut, v.pe1Fin, undefined, 'day')
+							&& !wn.isBetween(v.pe2Debut, v.pe2Fin, undefined, 'day')
+							&& !wn.isBetween(v.interruption1Debut, v.interruption1Fin, undefined, 'day')
+							&& !wn.isBetween(v.interruption2Debut, v.interruption2Fin, undefined, 'day')
+						) {
 						total += v.stagiaires_reel
 						console.log("ok")
 					}
@@ -320,6 +329,7 @@ const tools = {
 			// s_inc += wn.unix()
 		}
 
+		console.log(stagiaires);
         return stagiaires
     },
 
