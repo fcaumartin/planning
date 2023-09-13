@@ -100,15 +100,15 @@ const tools = {
     },
 
     getDays: (d1, d2) => {
-        let j_inc = d1
+        // let j_inc = d1
 		let arr = [];
 		let arr_end_of_month = [];
 		let now = dayjs().format("DD/MM/YYYY")
-		let jj = dayjs.unix(j_inc)
-		while (jj.unix()<d2)  {
+		let jj = dayjs(d1)
+		while (jj.isSameOrBefore(d2))  {
 			let info_jour = "";
 			// console.log(jj.format("DD/MM/YYYY HH:mm:ss"))
-			let m1 = dayjs(jj).add(1, 'days')
+			let m1 = jj.add(1, 'days')
 			if (now === jj.format("DD/MM/YYYY"))
 				info_jour += " aujourdhui ";
 			if(m1.month() !== jj.month()) 
@@ -126,8 +126,8 @@ const tools = {
 			// j_inc += 86400
 			jj = jj.add(1, 'days')
 		}
-		// console.log(arr)
-		// console.log(arr_end_of_month)
+		console.log(arr)
+		console.log(arr_end_of_month)
 
         return [arr, arr_end_of_month]
     },
@@ -283,13 +283,13 @@ const tools = {
 
 	getStagiairesByWeek: (filtered, d1, d2) => {
 
-		console.log("starting ...")
+		//console.log("starting ...")
         //let s_inc = d1.startOf('week')
 		let stagiaires = [];
         let old_value = -1;
 		// d1.isoWeekday()
 		let wn = dayjs(d1.startOf('week'))
-		console.log("starting at " + wn.format("DD/MM/YYYY"))
+		// console.log("starting at " + wn.format("DD/MM/YYYY"))
 		while (wn.isSameOrBefore(d2)) {
 			
 			
@@ -297,18 +297,18 @@ const tools = {
 
 				let total = 0;
 				filtered.forEach((v) => {
-					if (wn.year()==2024 && wn.week()==3) {
+					// if (wn.year()==2024 && wn.week()==3) {
 
-						console.log("--------------------------------------------------------")
-						console.log(wn.year() + " " + wn.week())
-						console.log(v.sigle, v.osia1)
-						console.log("debut " + v.debut.format("DD/MM/YYYY HH:mm:ss"))
-						console.log("fin " + v.fin.format("DD/MM/YYYY HH:mm:ss"))
-						console.log("pe1 debut " + (v.pe1Debut?v.pe1Debut.format("DD/MM/YYYY HH:mm:ss"):""))
-						console.log("pe1 fin" + (v.pe1Fin?v.pe1Fin.format("DD/MM/YYYY HH:mm:ss"):""))
-						console.log(wn.format("DD/MM/YYYY HH:mm:ss"))
-						console.log(v.stagiaires_reel)
-					}
+					// 	console.log("--------------------------------------------------------")
+					// 	console.log(wn.year() + " " + wn.week())
+					// 	console.log(v.sigle, v.osia1)
+					// 	console.log("debut " + v.debut.format("DD/MM/YYYY HH:mm:ss"))
+					// 	console.log("fin " + v.fin.format("DD/MM/YYYY HH:mm:ss"))
+					// 	console.log("pe1 debut " + (v.pe1Debut?v.pe1Debut.format("DD/MM/YYYY HH:mm:ss"):""))
+					// 	console.log("pe1 fin" + (v.pe1Fin?v.pe1Fin.format("DD/MM/YYYY HH:mm:ss"):""))
+					// 	console.log(wn.format("DD/MM/YYYY HH:mm:ss"))
+					// 	console.log(v.stagiaires_reel)
+					// }
 					// if (wn.unix()>=(v.tsDebut-0) && wn.unix()<=v.tsFin) {
 					if (
 							wn.isBetween(v.debut, v.fin, undefined, 'day') 
@@ -318,7 +318,7 @@ const tools = {
 							&& !wn.isBetween(v.interruption2Debut, v.interruption2Fin, undefined, 'day')
 						) {
 						total += v.stagiaires_reel
-						console.log("ok")
+						// console.log("ok")
 					}
 				})
 				
@@ -329,7 +329,7 @@ const tools = {
 			// s_inc += wn.unix()
 		}
 
-		console.log(stagiaires);
+		// console.log(stagiaires);
         return stagiaires
     },
 

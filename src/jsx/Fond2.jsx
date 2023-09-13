@@ -18,7 +18,7 @@ function Fond2 (props) {
 		// console.log("tsFin=" + tools.parseTS(props.tsFin))
 
 		
-		let t_d = tools.getDays(gantt.tsDebut, gantt.tsFin) 
+		let t_d = tools.getDays(gantt.debut, gantt.fin) 
 		setJours(t_d[0]);
 		setJoursEOM(t_d[1]);
 

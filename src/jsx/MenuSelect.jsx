@@ -16,17 +16,17 @@ function MenuSelect(props) {
 	}
 
 	const handleClick = (evt, i) => {
-		console.dir("******************************")
-		console.dir(evt.target.nodeName.toLowerCase())
+		// console.dir("******************************")
+		// console.dir(evt.target.nodeName.toLowerCase())
 		if (evt.target.nodeName.toLowerCase()==="div") {
 			handleChange(!evt.target.firstChild.checked, i)
 		}
 		if (evt.target.nodeName.toLowerCase()==="label") {
-			console.dir(evt.target.previousElementSibling)
+			// console.dir(evt.target.previousElementSibling)
 			handleChange(!evt.target.previousElementSibling.checked, i)
 		}
 		if (evt.target.nodeName.toLowerCase()==="input") {
-			console.dir(evt.target)
+			// console.dir(evt.target)
 			handleChange(!evt.target.checked, i)
 		}
 	}

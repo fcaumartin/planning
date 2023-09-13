@@ -50,14 +50,14 @@ const ganttSlice = createSlice({
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
             
-            console.log("--loading-Excel----------------------")
-            console.log(state.stagiaires)
-            console.log("-------------------------------------")
+            // console.log("--loading-Excel----------------------")
+            // console.log(state.stagiaires)
+            // console.log("-------------------------------------")
             
             return state;
         },
         changeSelectedGrns: (state, action) => {
-            console.log("selected GRN")
+            // console.log("selected GRN")
             state.selectedGrns = action.payload
             state.sigles = tools.getSigles(state.data, state.selectedGrns)
             state.selectedSigles = [...state.sigles]
@@ -84,7 +84,7 @@ const ganttSlice = createSlice({
             return state;
         },
         changeSelectedSigles: (state, action) => {
-            console.log("selected Sigle")
+            // console.log("selected Sigle")
 
             state.selectedSigles = action.payload
 
@@ -106,7 +106,7 @@ const ganttSlice = createSlice({
             return state;
         },
         changeSelectedFormateurs: (state, action) => {
-            console.log("selected Formateur")
+            // console.log("selected Formateur")
 
             state.selectedFormateurs = action.payload
 
