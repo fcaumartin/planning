@@ -51,12 +51,14 @@ const tools = {
     },
 
     getMonths: (d1, d2) => {
-        let m_inc = d1
+
+		console.log("getMonths : starting at " + d1.format("DD/MM/YYYY"))
+        // let m_inc = d1
 		let old_value=-1
 		let arr_month = [];
 		let arr_month_length = [];
-		let wn = dayjs.unix(m_inc)
-		while (wn.unix()<d2) {
+		let wn = dayjs(d1)
+		while (wn.isSameOrBefore(d2)) {
 			
 			if (old_value !== wn.month()) {
 
@@ -68,16 +70,20 @@ const tools = {
 			// m_inc += 86400;
 		}
 
+		console.log(arr_month)
+		console.log(arr_month_length)
         return [arr_month, arr_month_length];
     },
 
     getWeeks: (d1, d2) => {
-        let s_inc = d1
+
+		console.log("getWeeks : starting at " + d1.format("DD/MM/YYYY"))
+        // let s_inc = d1
 		let arr_week = [];
 		let arr_week_length = [];
         let old_value = -1;
-		let wn = dayjs.unix(s_inc)
-		while (wn.unix()<d2) {
+		let wn = dayjs(d1)
+		while (wn.isSameOrBefore(d2)) {
 			
 			
 			if (old_value !== wn.week()) {
@@ -96,11 +102,15 @@ const tools = {
 			// s_inc += 86400;
 		}
 
+		console.log(arr_week)
+		console.log(arr_week_length)
         return [arr_week, arr_week_length]
     },
 
     getDays: (d1, d2) => {
-        // let j_inc = d1
+        
+		console.log("getDays : starting at " + d1.format("DD/MM/YYYY"))
+		// let j_inc = d1
 		let arr = [];
 		let arr_end_of_month = [];
 		let now = dayjs().format("DD/MM/YYYY")
@@ -172,8 +182,8 @@ const tools = {
 			let interruption2d1 = o[44] && dayjs(o[44]).hour(0)
 			let interruption2d2 = o[45] && dayjs(o[45]).hour(0)
 			
-			let tsDebut = debut.unix() + 0
-			let tsFin = fin.unix() + 0
+			//let tsDebut = debut.unix() + 0
+			//let tsFin = fin.unix() + 0
 			let pe1Debut = pe1d1 ? pe1d1 : undefined
 			let pe1Fin = pe1d2 ? pe1d2 : undefined
 			let pe2Debut = pe2d1 ? pe2d1: undefined
@@ -218,7 +228,7 @@ const tools = {
 				optex, 
 				af, 
 				debut, fin,
-				tsDebut, tsFin, 
+				// tsDebut, tsFin, 
 				dateDebut, dateFin, 
 				description, 
 				pe1Debut, pe1Fin, pe2Debut, pe2Fin, 
@@ -337,8 +347,8 @@ const tools = {
         return data
 			.filter ( v => grns.includes(v.grn) && sigles.includes(v.sigle) && formateurs.includes(v.formateur)) 
 			.sort((a,b) => {
-				if (a.tsDebut>b.tsDebut) return 1
-				else if (a.tsDebut<b.tsDebut) return -1
+				if (a.debut.unix()>b.debut.unix()) return 1
+				else if (a.debut.unix()<b.debut.unix()) return -1
 				else 
 					if (a.sigle>b.sigle) return 1
 					else if (a.sigle<b.sigle) return -1

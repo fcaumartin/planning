@@ -18,8 +18,8 @@ const ganttSlice = createSlice({
         sigles: [],
         selectedSigles: [],
         stagiaires: [],
-        tsDebut: 0,
-        tsFin: 0,
+        // tsDebut: 0,
+        // tsFin: 0,
         debut: dayjs(),
         fin: dayjs()
     },
@@ -40,13 +40,15 @@ const ganttSlice = createSlice({
             state.debut = dayjs().hour(0)
             state.fin = dayjs().hour(0)
             for (const o of state.filtered) {
-                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
-				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+                if (o.debut.isBefore(state.debut)) state.debut = dayjs(o.debut)
+				if (o.fin.isAfter(state.fin)) state.fin = dayjs(o.fin)
 			}
-            state.debut = state.debut.startOf("month").startOf("week")
-            state.fin = state.fin.endOf('month').endOf('week')
-			state.tsDebut = state.debut.unix();
-			state.tsFin = state.fin.unix();
+            state.debut = state.debut.startOf("month"); //.startOf("week")
+            state.fin = state.fin.endOf('month'); //.endOf('week')
+            console.log("debut " + state.debut.format("DD/MM/YYYY"))
+            console.log("fin " + state.fin.format("DD/MM/YYYY"))
+			//state.tsDebut = state.debut.unix();
+			//state.tsFin = state.fin.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
             
@@ -67,13 +69,13 @@ const ganttSlice = createSlice({
             state.debut = dayjs().hour(0)
             state.fin = dayjs().hour(0)
             for (const o of state.filtered) {
-                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
-				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+                if (o.debut.isBefore(state.debut)) state.debut = dayjs(o.debut)
+				if (o.fin.isAfter(state.fin)) state.fin = dayjs(o.fin)
 			}
-            state.debut = state.debut.startOf("month").startOf("week")
-            state.fin = state.fin.endOf('month').endOf('week')
-			state.tsDebut = state.debut.unix();
-			state.tsFin = state.fin.unix();
+            state.debut = state.debut.startOf("month"); //.startOf("week")
+            state.fin = state.fin.endOf('month'); //.endOf('week')
+			// state.tsDebut = state.debut.unix();
+			// state.tsFin = state.fin.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 
@@ -93,13 +95,13 @@ const ganttSlice = createSlice({
             state.debut = dayjs().hour(0)
             state.fin = dayjs().hour(0)
             for (const o of state.filtered) {
-                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
-				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+                if (o.debut.isBefore(state.debut)) state.debut = dayjs(o.debut)
+				if (o.fin.isAfter(state.fin)) state.fin = dayjs(o.fin)
 			}
-            state.debut = state.debut.startOf("month").startOf("week")
-            state.fin = state.fin.endOf('month').endOf('week')
-			state.tsDebut = state.debut.unix();
-			state.tsFin = state.fin.unix();
+            state.debut = state.debut.startOf("month"); //.startOf("week")
+            state.fin = state.fin.endOf('month'); //.endOf('week')
+			// state.tsDebut = state.debut.unix();
+			// state.tsFin = state.fin.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 
@@ -115,13 +117,13 @@ const ganttSlice = createSlice({
             state.debut = dayjs().hour(0)
             state.fin = dayjs().hour(0)
             for (const o of state.filtered) {
-                if (state.debut.isAfter(o.debut)) state.debut = dayjs(o.debut)
-				if (state.fin.isBefore(o.fin)) state.fin = dayjs(o.fin)
+                if (o.debut.isBefore(state.debut)) state.debut = dayjs(o.debut)
+				if (o.fin.isAfter(state.fin)) state.fin = dayjs(o.fin)
 			}
-            state.debut = state.debut.startOf("month").startOf("week")
-            state.fin = state.fin.endOf('month').endOf('week')
-			state.tsDebut = state.debut.unix();
-			state.tsFin = state.fin.unix();
+            state.debut = state.debut.startOf("month"); //.startOf("week")
+            state.fin = state.fin.endOf('month'); //.endOf('week')
+			// state.tsDebut = state.debut.unix();
+			// state.tsFin = state.fin.unix();
             
             state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
 

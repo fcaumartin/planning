@@ -22,7 +22,7 @@ function Fond2 (props) {
 		setJours(t_d[0]);
 		setJoursEOM(t_d[1]);
 
-	}, [gantt.tsDebut, gantt.tsFin]);
+	}, [gantt.debut, gantt.fin]);
 
 	return (
 		<div className="fond2">

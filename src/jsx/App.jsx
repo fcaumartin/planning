@@ -114,7 +114,7 @@ function App() {
 					className="gantt" 
 					style={ { 
 						height: gantt.filtered.length * (config.hauteurFormation+config.margeFormation) + 130 ,
-						width: ((gantt.tsFin-gantt.tsDebut)/86400) * config.largeurJour 
+						width: ((gantt.fin.unix()-gantt.debut.unix())/86400) * config.largeurJour 
 					} }
 					onMouseMove={(evt)=>{/*console.log(evt)*/}}
 				>

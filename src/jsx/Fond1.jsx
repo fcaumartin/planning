@@ -19,15 +19,15 @@ function Fond1 (props) {
 		// console.log("tsDebut=" + tools.parseTS(props.tsDebut))
 		// console.log("tsFin=" + tools.parseTS(props.tsFin))
 
-		let t_m = tools.getMonths(gantt.tsDebut, gantt.tsFin)
+		let t_m = tools.getMonths(gantt.debut, gantt.fin)
 		setMonths(t_m[0])
 		setMonthsLength(t_m[1])
 
-		let t_w = tools.getWeeks(gantt.tsDebut, gantt.tsFin)
+		let t_w = tools.getWeeks(gantt.debut, gantt.fin)
 		setWeeks(t_w[0])
 		setWeeksLength(t_w[1])
 		
-	}, [gantt.tsDebut, gantt.tsFin]);
+	}, [gantt.debut, gantt.fin]);
 
 	return (
 		<div className="fond1" style={{left: -props.scrollX}}>
