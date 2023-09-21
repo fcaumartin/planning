@@ -34,7 +34,13 @@ const feries = [
 
 const tools = {
 
-    parseTS: (dd) => {
+    getValue: (x) => {
+
+
+        return x ? (x.hasOwnProperty("result") ? x.result : x) : null;
+    },
+	
+	parseTS: (dd) => {
 
 
         return dayjs.unix(dd).format("DD/MM/YYYY");
@@ -52,7 +58,7 @@ const tools = {
 
     getMonths: (d1, d2) => {
 
-		console.log("getMonths : starting at " + d1.format("DD/MM/YYYY"))
+		// console.log("getMonths : starting at " + d1.format("DD/MM/YYYY"))
         // let m_inc = d1
 		let old_value=-1
 		let arr_month = [];
@@ -70,14 +76,14 @@ const tools = {
 			// m_inc += 86400;
 		}
 
-		console.log(arr_month)
-		console.log(arr_month_length)
+		// console.log(arr_month)
+		// console.log(arr_month_length)
         return [arr_month, arr_month_length];
     },
 
     getWeeks: (d1, d2) => {
 
-		console.log("getWeeks : starting at " + d1.format("DD/MM/YYYY"))
+		// console.log("getWeeks : starting at " + d1.format("DD/MM/YYYY"))
         // let s_inc = d1
 		let arr_week = [];
 		let arr_week_length = [];
@@ -102,14 +108,14 @@ const tools = {
 			// s_inc += 86400;
 		}
 
-		console.log(arr_week)
-		console.log(arr_week_length)
+		// console.log(arr_week)
+		// console.log(arr_week_length)
         return [arr_week, arr_week_length]
     },
 
     getDays: (d1, d2) => {
         
-		console.log("getDays : starting at " + d1.format("DD/MM/YYYY"))
+		// console.log("getDays : starting at " + d1.format("DD/MM/YYYY"))
 		// let j_inc = d1
 		let arr = [];
 		let arr_end_of_month = [];
@@ -136,8 +142,8 @@ const tools = {
 			// j_inc += 86400
 			jj = jj.add(1, 'days')
 		}
-		console.log(arr)
-		console.log(arr_end_of_month)
+		// console.log(arr)
+		// console.log(arr_end_of_month)
 
         return [arr, arr_end_of_month]
     },
@@ -152,15 +158,15 @@ const tools = {
 		for (let o of raw ) {
 			// console.log(o)
 			let debut = dayjs(o[10]).hour(0)
-			let fin = dayjs(o[11]).hour(0)
+			let fin = dayjs(tools.getValue(o[11])).hour(0)
 			// let debut = d1
 			// let fin = d2
-			let pe1d1 = o[12] && dayjs(o[12]).hour(0)
-			let pe1d2 = o[13] && dayjs(o[13]).hour(0)
-			let pe2d1 = o[14] && dayjs(o[14]).hour(0)
-			let pe2d2 = o[15] && dayjs(o[15]).hour(0)
-			let certifd1 = o[16] && dayjs(o[16]).hour(0)
-			let certifd2 = o[17] && dayjs(o[17]).hour(0)
+			let pe1d1 = o[12] && dayjs(tools.getValue(o[12])).hour(0)
+			let pe1d2 = o[13] && dayjs(tools.getValue(o[13])).hour(0)
+			let pe2d1 = o[14] && dayjs(tools.getValue(o[14])).hour(0)
+			let pe2d2 = o[15] && dayjs(tools.getValue(o[15])).hour(0)
+			let certifd1 = o[16] && dayjs(tools.getValue(o[16])).hour(0)
+			let certifd2 = o[17] && dayjs(tools.getValue(o[17])).hour(0)
 			let grn = o[1] || ""
 			let sigle = o[2] || ""
 			let libelle = o[3] || ""
