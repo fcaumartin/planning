@@ -8,4 +8,8 @@ docker run --rm -ti \
  -v ${PWD##*/}-node-modules:/project/node_modules \
  -v ~/.cache/electron:/root/.cache/electron \
  -v ~/.cache/electron-builder:/root/.cache/electron-builder \
- electronuserland/builder:wine
+ electronuserland/builder:wine 
+
+chown -R frc:frc dist-electron/
+chown -R frc:frc dist/
+chown -R frc:frc release/

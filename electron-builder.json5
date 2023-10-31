@@ -6,7 +6,7 @@
   "asar": true,
   "directories": {
     // "buildResources": "resources",
-    "output": "release/${version}"
+    "output": "release"
   },
   "files": [
     "dist-electron",
@@ -14,6 +14,7 @@
     // "resources/**/*"
   ],
   "win": {
+    "icon": "./ressources/icons/icon.png",
     "target": [
       {
         "target": "nsis",
@@ -26,7 +27,7 @@
   },
   "linux": {
     "target": [ "AppImage" ],
-    "icon": "ressources/icons/icon.png"
+    "icon": "./ressources/icons/icon.png"
   },
   "nsis": {
     "oneClick": false,
