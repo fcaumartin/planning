@@ -35,24 +35,18 @@ const feries = [
 const tools = {
 
     getValue: (x) => {
-
-
         return x ? (x.hasOwnProperty("result") ? x.result : x) : null;
     },
 	
 	parseTS: (dd) => {
-
-
         return dayjs.unix(dd).format("DD/MM/YYYY");
     },
 
     parseFR: (dd) => {
-
         return dayjs(dd, "DD/MM/YYYY").unix();
     },
     
     diffTsToDays: (d1, d2) => {
-
         return Math.abs( ((d2-d1)/(24*3600))) ;
     },
 
@@ -361,6 +355,41 @@ const tools = {
 					else return 0
 			})
     },
+
+	loadExcel: (state, action) => {
+		// console.log("load Excel")
+
+		state.data = action.payload
+		state.grns = tools.getGRN(state.data)
+		state.selectedGrns = [...state.grns]
+		state.sigles = tools.getSigles(state.data)
+		state.selectedSigles = [...state.sigles]
+		state.formateurs = tools.getFormateurs(state.data)
+		state.selectedFormateurs = [...state.formateurs]
+
+		state.filtered = tools.bigFilter(state.data, state.selectedGrns, state.selectedSigles, state.selectedFormateurs)
+
+		state.debut = dayjs().hour(0)
+		state.fin = dayjs().hour(0)
+		for (const o of state.filtered) {
+			if (o.debut.isBefore(state.debut)) state.debut = dayjs(o.debut)
+			if (o.fin.isAfter(state.fin)) state.fin = dayjs(o.fin)
+		}
+		state.debut = state.debut.startOf("month"); //.startOf("week")
+		state.fin = state.fin.endOf('month'); //.endOf('week')
+		// console.log("state debut " + state.debut.format("DD/MM/YYYY"))
+		// console.log("state fin " + state.fin.format("DD/MM/YYYY"))
+		//state.tsDebut = state.debut.unix();
+		//state.tsFin = state.fin.unix();
+		
+		state.stagiaires = tools.getStagiairesByWeek(state.filtered, state.debut, state.fin)
+		
+		// console.log("--loading-Excel----------------------")
+		// console.log(state.stagiaires)
+		// console.log("-------------------------------------")
+		
+		return state;
+	},
 }
 
 

@@ -1,19 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './jsx/App';
-import { Provider } from 'react-redux';
-
-import { store } from './redux';
-
+import { RecoilRoot } from 'recoil';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Provider store={store}>
+    <RecoilRoot>
         <App />
-
-    </Provider>
+    </RecoilRoot>
 );
 
+
+
+/**
+ * 
+ * 
+ * 
+ * Affreux bricolage pour scroller le fond
+ * 
+ * 
+ * 
+ */
 
 
 var clicked = false, clickX, clickY;
