@@ -30,7 +30,7 @@ function Formation({index, elt}) {
 			&nbsp;-&nbsp;
 			{elt.af || <span className="enrouge">?</span>}
 			&nbsp;-&nbsp;
-			<b>{elt.stagiaires_reel && ("[" + elt.stagiaires_reel + "]")}</b>
+			<b>{"[" + elt.stagiaires_reel + "/" + elt.stagiaires_prevu + "]"}</b>
 
 			{
 				elt.pe1Debut && <div
