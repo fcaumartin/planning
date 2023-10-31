@@ -63,7 +63,7 @@ function MenuSelect(props) {
 
 	return (
 		<span className="menuselect" onMouseLeave={onMouseOut}>
-			<button className="titre" onMouseEnter={onMouseEnter}> {props.name}</button>
+			<div className="titre" onMouseEnter={onMouseEnter}> {props.name}</div>
 			<div className="content" style={ { visibility: visible?"visible":'hidden' } }  >
 
 				<div  onClick={(evt) => {handleClick(evt,-1)}}>

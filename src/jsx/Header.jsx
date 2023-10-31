@@ -33,23 +33,23 @@ function Header(props) {
 
 	return (
 		<div className="header">
-			<fieldset>
-				<legend>Fichier</legend>
-				<span >{props.fichier}</span>
+			<div class="btn-group">
+				<legend>{props.fichier || 'Fichier' }</legend>
 				<button onClick={ props.onOpen } >&nbsp;&nbsp;&nbsp;Charger&nbsp;&nbsp;&nbsp;</button>
-				<button >&nbsp;&nbsp;&nbsp;Actualiser&nbsp;&nbsp;&nbsp;</button>
-			</fieldset>
-			<fieldset>
+				{/* <button >&nbsp;&nbsp;&nbsp;Actualiser&nbsp;&nbsp;&nbsp;</button> */}
+			</div>
+			<div class="btn-group">
 				<legend>Taille</legend>
 				<button onClick={ () => { handleChangeLargeur('-') }}>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;</button>
 				<button onClick={ () => { handleChangeLargeur('+') }}>&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;</button>
-			</fieldset>
-			<fieldset>
+			</div>
+			<div class="btn-group">
 				<legend>Filtres</legend>
 				<MenuSelect name="GRN" data={gantt.grns} onChange={handleChangeGRN} />
 				<MenuSelect name="Formations" data={gantt.sigles} onChange={handleChangeSigles}/>
 				<MenuSelect name="Formateurs" data={gantt.formateurs} onChange={handleChangeFormateurs}/>
-			</fieldset>
+			</div>
+			
 			<Fond1 scrollX={props.scrollX}/>
 
 		</div>
