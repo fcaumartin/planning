@@ -45,8 +45,8 @@ const ganttSlice = createSlice({
 			}
             state.debut = state.debut.startOf("month"); //.startOf("week")
             state.fin = state.fin.endOf('month'); //.endOf('week')
-            console.log("debut " + state.debut.format("DD/MM/YYYY"))
-            console.log("fin " + state.fin.format("DD/MM/YYYY"))
+            // console.log("state debut " + state.debut.format("DD/MM/YYYY"))
+            // console.log("state fin " + state.fin.format("DD/MM/YYYY"))
 			//state.tsDebut = state.debut.unix();
 			//state.tsFin = state.fin.unix();
             
