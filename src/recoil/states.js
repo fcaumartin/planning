@@ -5,67 +5,67 @@ import "dayjs/locale/fr";
 
 dayjs.locale('fr')
 
-const dataState = atom({
+export const dataState = atom({
     key: 'dataState', 
     default: [], 
 });
 
-const grnsState = atom({
+export const grnsState = atom({
     key: 'grnsState', 
     default: [], 
 });
 
-const selectedGrnsState = atom({
+export const selectedGrnsState = atom({
     key: 'selectedGrnsState', 
     default: [], 
 });
 
-const formateursState = atom({
+export const formateursState = atom({
     key: 'formateursState', 
     default: [], 
 });
 
-const selectedFormateursState = atom({
+export const selectedFormateursState = atom({
     key: 'selectedFormateursState', 
     default: [], 
 });
 
-const siglesState = atom({
+export const siglesState = atom({
     key: 'siglesState', 
     default: [], 
 });
 
-const selectedSiglesState = atom({
+export const selectedSiglesState = atom({
     key: 'selectedSiglesState', 
     default: [], 
 });
 
-const stagiairesState = atom({
+export const stagiairesState = atom({
     key: 'stagiairesState', 
     default: [], 
 });
 
-const debutState = atom({
+export const debutState = atom({
     key: 'debutState', 
     default: dayjs(), 
 });
 
-const finState = atom({
+export const finState = atom({
     key: 'finState', 
     default: dayjs(), 
 });
 
-const largeurJourState = atom({
+export const largeurJourState = atom({
     key: 'largeurJourState', 
     default: 5, 
 });
 
-const hauteurFormationState = atom({
+export const hauteurFormationState = atom({
     key: 'hauteurFormationState', 
     default: 10, 
 });
 
-const margeFormationState = atom({
+export const margeFormationState = atom({
     key: 'margeFormationState', 
     default: 20, 
 });

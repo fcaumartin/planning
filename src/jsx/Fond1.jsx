@@ -2,12 +2,12 @@ import { useState, useEffect } from "react";
 
 import { tools } from "../lib/tools";
 
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 
 
 function Fond1 (props) {
 
-	const { gantt, config } = useSelector(store => store)
+	// const { gantt, config } = useSelector(store => store)
 
 	const [weeks, setWeeks] = useState([]);
 	const [weeksLength, setWeeksLength] = useState([]);

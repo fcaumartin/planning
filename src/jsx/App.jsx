@@ -7,14 +7,8 @@ import { tools } from '../lib/tools';
 import Dialog from './Dialog';
 import Spinner from './Spinner';
 
-import { loadExcel } from '../redux';
-
-// import { BrowserWindow } from 'electron';
-
-import { useDispatch, useSelector } from 'react-redux';
-
-// const mainWindow = BrowserWindow.getFocusedWindow();
-
+import { useSetRecoilState } from 'recoil';
+import { dataState, grnsState, siglesState, formateursState, selectedFormateursState, selectedGrnsState, selectedSiglesState } from '../recoil/states';
 
 function App() {
 
@@ -23,64 +17,79 @@ function App() {
 	const [loading, setLoading] = useState(true);
 	const [fichier, setFichier] = useState("");
 
-	const { gantt, config } = useSelector(state => state)
+	const setData = useSetRecoilState(dataState);
+	const setGrns = useSetRecoilState(grnsState);
+	const setSigles = useSetRecoilState(siglesState);
+	const setFormateurs = useSetRecoilState(formateursState);
+	const setSelectedGrns = useSetRecoilState(selectedGrnsState);
+	const setSelectedSigles = useSetRecoilState(selectedSiglesState);
+	const setSelectedFormateurs = useSetRecoilState(selectedFormateursState);
 
 	const [scrollX, setScrollX] = useState(0);
 
 	const dispatch = useDispatch();
 
 	const callGetFiles = async () => {
-		// console.log("111")
 		window.scrollTo(0,0)
 		setDialog(true)
 		setFiles([])
 		setLoading(true)
-		let tab = await window.electronAPI.getFiles();
+		let files = await window.electronAPI.getFiles();
 		setLoading(false)
-		// console.log("222")
-		setFiles(tab);
-		// console.log("-RAW----------------------------")
-		// console.log(tab)
-	  	// console.log("-----------------------------")
+		setFiles(files);
 	}
 
 	const handleSelectFile = (elt) => {
 		// console.log(elt)
 		setLoading(false)
-		callOuvrir(elt.fullName)
+		callOpenFile(elt.fullName)
 		setFichier(elt.name)
 	}
 	
 
-	const callOuvrir = async (file) => {
+	const callOpenFile = async (file) => {
 
 		setLoading(true)
 
 		window.electronAPI.choice(file);
-		const raw = await window.electronAPI.openFile()
-		
+		let raw = await window.electronAPI.openFile()
 		let data = tools.rawToData(raw)
-
-		// const m = tools.getFormateur(data)
-		// const k = m.keys()
 		
-		// for (const value of k) {
-		// 	console.log(value);
-		// 	const tab = m.get(value)
-		// 	for (const t of tab) {
-		// 		console.log(`\t${t.sigle} -> ${t.stagiaires_reel}`)
-				
-		// 	}
-		//   }
+		let grns = tools.getGRN(data)
+		let sigles = tools.getSigles(data)
+		let formateurs = tools.getFormateurs(data)
+		
+		let selectedGrns = [...grns]
+		let selectedSigles = [...sigles]
+		let selectedFormateurs = [...formateurs]
+		
+		let debut = dayjs().hour(0)
+		let fin = dayjs().hour(0)
+		for (const o of state.filtered) {
+			if (o.debut.isBefore(debut)) debut = dayjs(o.debut)
+			if (o.fin.isAfter(fin)) fin = dayjs(o.fin)
+		}
+		debut = debut.startOf("month"); //.startOf("week")
+		fin = fin.endOf('month'); //.endOf('week')
+	
+		// let filtered = tools.bigFilter(data, selectedGrns, selectedSigles, selectedFormateurs)
 
-		// dispatch(loadExcel(raw));
-		dispatch(loadExcel(data));
+		// let stagiaires = tools.getStagiairesByWeek(filtered, debut, fin)
+
+		setData(data)
+		setGrns(grns)
+		setSigles(sigles)
+		setFormateurs(formateurs)
+		setSelectedGrns(grns)
+		setSelectedSigles(sigles)
+		setSelectedFormateurs(formateurs)
+	
 		setLoading(false)
 		setDialog(false)
 	}
 
 	const handleOnScroll = async (evt) => {
-		console.log(evt)
+		// console.log(evt)
 		
 	}
 
