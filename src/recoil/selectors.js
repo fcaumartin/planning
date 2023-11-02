@@ -25,4 +25,18 @@ export const filteredState = selector({
 					else return 0
 			})
     },
-  });
+});
+
+
+
+export const stagiairesState = selector({
+    key: 'stagiairesState',
+    get: ({get}) => {
+      const filtered = get(filteredState);
+      const grns = get(selectedGrnsState);
+      const sigles = get(selectedSiglesState);
+      const formateurs = get(selectedFormateursState);
+  
+      return 
+    },
+});
