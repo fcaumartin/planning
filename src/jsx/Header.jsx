@@ -1,21 +1,24 @@
 import Fond1 from "./Fond1";
 
 // import config from "../config";
-import { useDispatch, useSelector } from "react-redux";
-import { changeSelectedGrns, changeSelectedSigles, changeSelectedFormateurs, setLargeurJour } from '../redux'
+// import { useDispatch, useSelector } from "react-redux";
+// import { changeSelectedGrns, changeSelectedSigles, changeSelectedFormateurs, setLargeurJour } from '../redux'
 import MenuSelect from "./MenuSelect";
+import { largeurJourState } from "../recoil/states";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 function Header(props) {
 
-	const { gantt, config } = useSelector(store => store)
-	const dispatch = useDispatch()
+	// const { gantt, config } = useSelector(store => store)
+	// const dispatch = useDispatch()
+	const [largeurJour, setLargeurJour] = useRecoilState(largeurJourState);
 
 	const handleChangeLargeur = (sign) => {
-		let lj = config.largeurJour
+		let lj = largeurJour
 		if (sign==='+') lj++
 		if (sign==='-') lj--
 		
-		dispatch(setLargeurJour(lj))
+		setLargeurJour(lj)
 		
 	}
 

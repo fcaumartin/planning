@@ -1,13 +1,13 @@
-import { atom } from "recoil"
-import { tools } from "./lib/tools"
+import { atom, selector } from "recoil"
+import { tools } from "../lib/tools"
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
 import { dataState, selectedFormateursState, selectedGrnsState, selectedSiglesState } from "./states";
 
 dayjs.locale('fr')
 
-const filtered = selector({
-    key: 'filteredTodoListState',
+export const filteredState = selector({
+    key: 'filteredState',
     get: ({get}) => {
       const data = get(dataState);
       const grns = get(selectedGrnsState);

@@ -7,8 +7,23 @@ import { tools } from '../lib/tools';
 import Dialog from './Dialog';
 import Spinner from './Spinner';
 
-import { useSetRecoilState } from 'recoil';
-import { dataState, grnsState, siglesState, formateursState, selectedFormateursState, selectedGrnsState, selectedSiglesState } from '../recoil/states';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { 
+	dataState, 
+	grnsState, 
+	siglesState, 
+	formateursState, 
+	selectedFormateursState, 
+	selectedGrnsState, 
+	selectedSiglesState, 
+	largeurJourState, 
+	hauteurFormationState, 
+	margeFormationState, 
+	debutState, 
+	finState 
+} from '../recoil/states';
+
+import { filteredState } from '../recoil/selectors';
 
 function App() {
 
@@ -25,9 +40,16 @@ function App() {
 	const setSelectedSigles = useSetRecoilState(selectedSiglesState);
 	const setSelectedFormateurs = useSetRecoilState(selectedFormateursState);
 
+	const filtered = useRecoilValue(filteredState);
+	const largeurJour = useRecoilValue(largeurJourState);
+	const margeFormation = useRecoilValue(margeFormationState);
+	const hauteurFormation = useRecoilValue(hauteurFormationState);
+	const debut = useRecoilValue(debutState);
+	const fin = useRecoilValue(finState);
+
 	const [scrollX, setScrollX] = useState(0);
 
-	const dispatch = useDispatch();
+	// const dispatch = useDispatch();
 
 	const callGetFiles = async () => {
 		window.scrollTo(0,0)
@@ -122,8 +144,8 @@ function App() {
 				<div 
 					className="gantt" 
 					style={ { 
-						height: gantt.filtered.length * (config.hauteurFormation+config.margeFormation) + 130 ,
-						width: ((gantt.fin.unix()-gantt.debut.unix())/86400) * config.largeurJour 
+						height: filtered.length * (hauteurFormation+margeFormation) + 130 ,
+						width: ((fin.unix()-debut.unix())/86400) * largeurJour 
 					} }
 					onMouseMove={(evt)=>{/*console.log(evt)*/}}
 				>
