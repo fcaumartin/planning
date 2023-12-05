@@ -6,12 +6,12 @@
     "email": "kill@bill.com"
   },
   "private": true,
-  "version": "1.0.31",
+  "version": "1.0.32",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "electron-builder -wl",
+    "deploy": "electron-builder --windows --linux --publish always",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "postinstall": "electron-builder install-app-deps",
