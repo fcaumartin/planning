@@ -6,7 +6,7 @@
     "email": "kill@bill.com"
   },
   "private": true,
-  "version": "1.0.33",
+  "version": "1.0.34",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "vite",
