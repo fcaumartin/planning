@@ -6,7 +6,7 @@
     "email": "kill@bill.com"
   },
   "private": true,
-  "version": "1.0.36",
+  "version": "1.0.37",
   "main": "dist-electron/main/index.js",
   "scripts": {
     "dev": "vite",
@@ -14,10 +14,7 @@
     "deploy": "electron-builder --windows --linux --publish always",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "postinstall": "electron-builder install-app-deps",
-		"edbuild": "electron-builder --mac --windows --linux",
-		"edrelease": "electron-builder --mac --windows --linux --publish always"
-	
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "dayjs": "^1.11.9",
