@@ -70,11 +70,12 @@ fieldset button {
     background-color: rgb(79, 199, 255);
     overflow-x: visible;
     overflow-y: visible;
-    border-radius: 5px;
-    border-bottom: 2px solid #e1e1e1;
-    border-top: 2px solid #e1e1e1;
+    border-radius: 3px;
+    /* border-bottom: 2px solid #e1e1e1; */
+    /* border-top: 2px solid #e1e1e1; */
     /* vertical-align: middle; */
     white-space: nowrap;
+    box-shadow: 5px 5px 4px rgb(150, 150, 150);
 }
 
 .entreprise {
